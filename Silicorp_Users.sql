@@ -1,3 +1,4 @@
+drop SCHEMA IF EXISTS Semi_Conductor_Management_System;
 create SCHEMA Semi_Conductor_Management_System;
 use Semi_Conductor_Management_System;
 
@@ -18,16 +19,16 @@ CREATE TABLE Employee(
 	Address varchar(100),
 	Dept_Code varchar(10),
 	Date_Of_Employment Date,
-    FOREIGN KEY (Dept_Code) REFERENCES Departments(Dept_Code) ON DELETE RESTRICT,
+    FOREIGN KEY (Dept_Code) REFERENCES Departments(Dept_Code) ON DELETE RESTRICT
 );
 
 create table Users(
-    User_id int NOT NULL PRIMARY KEY AUTOINCREMENT,
+    User_id int NOT NULL PRIMARY KEY Auto_Increment,
     FName varchar(50) NOT NULL,
     LName varchar(50) NOT NULL,
     User_name varchar(50) NOT NULL,
     User_password varchar(255) NOT NULL,
-    User_role varchar(1) NOT NULL,
+    User_role varchar(1) NOT NULL
 
 
 );
@@ -42,7 +43,7 @@ Values ("MFP", "Marketing & Finance"),
 
 
 -- 1 for CEO and 2 for Branch Manager
-INSERT INTO Users(User_id, FName, LName, User_name, User_password, User_role) 
+INSERT INTO Users(FName, LName, User_name, User_password, User_role) 
 Values ("Deborah", "Boateng", "dboateng", "123", "2"),
 ("Michelle", "Ansah", "mansah", "123", "2"),
 ("Mathew", "Davis", "mdavis", "123", "1"),
@@ -50,7 +51,7 @@ Values ("Deborah", "Boateng", "dboateng", "123", "2"),
 ("Tasha", "Kent", "tkent", "123", "2");
 
 
-INSERT INTO Employee (Employee_ID, FName, LName, Gender, Date_of_Birth, Company_Email, Personal_Email, Address, Dept_Code, Bonus_Class_ID,Date_of_Employment ) 
+INSERT INTO Employee (Employee_ID, FName, LName, Gender, Date_of_Birth, Company_Email, Personal_Email, Address, Dept_Code, Date_of_Employment ) 
 Values ("EMP00001", "Kwaku", "Sampson", 1, "1997-09-22", "sampson.kwaku@amdInternal.cm","skwaku@gmail.com", "3 Coconut Street", "RD", "2020-10-22"),  
 ("EMP00002", "Deborah", "Boateng", 0, "2000-01-12", "boateng.deborah@amdInternal.cm","boatdeborah@gmail.com", "17 Drake Street", "MFP", "2022-05-22"),  
 ("EMP00003", "Mathew", "Davis", 1, "2001-06-19", "davis.mathew@amdInternal.cm", "dmathew@gmail.com", "2 Banana Street", "RD","2019-05-13"),  
@@ -66,7 +67,7 @@ Values ("EMP00001", "Kwaku", "Sampson", 1, "1997-09-22", "sampson.kwaku@amdInter
 ("EMP00013", "Bruce", "Wayne" ,1, "1915-04-7", "wayne.bruce@amdInternal.cm","wayne.bruce@icloud.com", "3 Wayne Street", "RD","2022-02-2"), 
 ("EMP00014", "Dinah", "Mensah", 0, "1998-09-13", "mensah.dinah@amdInternal.cm","mensadinah@icloud.com", "27 Orange Lane", "HR","2017-05-2"), 
 ("EMP00015", "Kwabena", "Stone", 1, "2002-08-23", "stone.kwabena@amdInternal.cm","stkwabena@gmail.com", "19 Justice Street", "CS","2020-05-5"),
-("EMP00016", "Sara", "Johnson", 0, "1995-12-12", "johnson.sara@amdInternal.cm", "sjohnson@yahoo.com", "16 Park Street", "IT",, "2020-08-01"),
+("EMP00016", "Sara", "Johnson", 0, "1995-12-12", "johnson.sara@amdInternal.cm", "sjohnson@yahoo.com", "16 Park Street", "IT", "2020-08-01"),
 ("EMP00017", "Daniel", "Garcia", 1, "1993-02-21", "garcia.daniel@amdInternal.cm", "dgarcia@gmail.com", "7 Oak Avenue", "MFP", "2021-03-15"),
 ("EMP00018", "Emily", "Chen", 0, "1998-06-05", "chen.emily@amdInternal.cm", "echen@hotmail.com", "25 Maple Road", "RD", "2019-01-15"),
 ("EMP00019", "Isaac", "Lee", 1, "2000-09-30", "lee.isaac@amdInternal.cm", "ilee@yahoo.com", "12 Elm Street", "CS", "2021-11-10"),
@@ -98,8 +99,7 @@ Values ("EMP00001", "Kwaku", "Sampson", 1, "1997-09-22", "sampson.kwaku@amdInter
 ("EMP00045", "Adwoa", "Owusu", 0, "1999-02-11", "owusu.adwoa@amdInternal.cm", "adwoaowusu22@yahoo.com", "17 North Kaneshie Road", "IT", "2022-01-02"),
 ("EMP00046", "Emmanuel", "Aidoo", 1, "1993-10-29", "aidoo.emmanuel@amdInternal.cm", "emmanuelaidoo@gmail.com", "22 Kasoa Street", "RD", "2018-12-14"),
 ("EMP00047", "Ama", "Asante", 0, "1995-08-13", "asante.ama@amdInternal.cm", "amaasante22@gmail.com", "10 East Legon Road", "HR", "2021-11-02"),
-("EMP00048", "Yaw", "Boateng", 1, "1997-05-06", "boateng.yaw@amdInternal.cm", "y.boateng@hotmail.com", "5 Abeka Road", "IT", "2019-06-21"),
-("EMP00049", "Akosua", "Gyan", 0, "2000-12-31", "gyan.akosua@amdInternal.cm", "akosua_gyan@yahoo.com", "20 Osu Street", "MFP", "2022-02-19"),
-("EMP00050", "Joseph", "Acheampong", 1, "1998-03-04", "acheampong.joseph@amdInternal.cm", "joseph_acheampong@gmail.com", "6 Tema Road", "RD", "2021-10-10");
+("EMP00048", "Akosua", "Gyan", 0, "2000-12-31", "gyan.akosua@amdInternal.cm", "akosua_gyan@yahoo.com", "20 Osu Street", "MFP", "2022-02-19"),
+("EMP00049", "Joseph", "Acheampong", 1, "1998-03-04", "acheampong.joseph@amdInternal.cm", "joseph_acheampong@gmail.com", "6 Tema Road", "RD", "2021-10-10");
 
 
