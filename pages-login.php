@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Pages / Login - NiceAdmin Bootstrap Template</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i">
+    <link rel="stylesheet" href="assets/css/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/boxicons.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/vendor/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/vendor/boxicons/css/boxicons.min.css">
+    <link rel="stylesheet" href="assets/css/vendor/quill/quill.snow.css">
+    <link rel="stylesheet" href="assets/css/vendor/quill/quill.bubble.css">
+    <link rel="stylesheet" href="assets/css/vendor/remixicon/remixicon.css">
+    <link rel="stylesheet" href="assets/css/vendor/simple-datatables/style.css">
+    <link rel="stylesheet" href="assets/css/css/style.css">
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <section class="d-flex flex-column justify-content-center align-items-center section register min-vh-100 py-4">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6 col-lg-4 d-flex flex-column justify-content-center align-items-center">
+                            <div class="d-flex justify-content-center py-4"><a class="d-flex align-items-center logo w-auto" href="index.html"></a></div><img src="assets/img/LOGO.png" width="230" height="40">
+                            <br>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="pt-4 pb-2">
+                                        <h5 class="fs-4 text-center card-title pb-0">Login into Your Account</h5>
+                                        <p class="text-center small">Please enter your username &amp; password to login</p>
+                                    </div>
+                                    <form class="row g-3 needs-validation" action = "login_process.php" method="POST">
+                                        <div class="col-12"><label class="form-label form-label" for="username">Username</label>
+                                            <div class="input-group has-validation"><span class="input-group-text input-group-text" id="inputGroupPrepend">@</span><input class="form-control form-control" type="text" name="username" id="username" required="">
+                                                <div class="input-group-text invalid-feedback"><span>Please enter your username.</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12"><label class="form-label form-label" for="password">Password</label><input class="form-control form-control" type="password" name="password" id="password" required="">
+                                            <div class="invalid-feedback"><span>Please enter your password!</span></div>
+                                        </div>
+                                       <!--  <div class="col-12">
+                                            <div class="form-check"><input type="checkbox" class="form-check-input" name="remember" value="true" id="rememberMe"><label class="form-label form-check-label" for="rememberMe">Remember me</label></div>
+                                        </div> -->
+                                        <input type="submit" name="login-pages" value="Login">
+                                        <!-- <div class="col-12"><button class="btn btn-primary w-100" name = "pages-login">Login</button></div> -->
+                                      <!--   <div class="col-12"><a href="index.html">
+                                            <p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
+                                        </div> -->
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="credits"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main><a class="d-flex justify-content-center align-items-center back-to-top" href="#"><i class="bi bi-arrow-up-short"></i></a>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="assets/js/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/vendor/chart.js/chart.umd.js"></script>
+    <script src="assets/js/vendor/echarts/echarts.min.js"></script>
+    <script src="assets/js/vendor/quill/quill.min.js"></script>
+    <script src="assets/js/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="assets/js/vendor/tinymce/tinymce.min.js"></script>
+    <script src="assets/js/vendor/php-email-form/validate.js"></script>
+    <script src="assets/js/js/main.js"></script>
+</body>
+
+</html>
