@@ -65,8 +65,17 @@
 
                   <form class="row g-3 needs-validation" novalidate>
                     <div class="col-12">
-                      <label for="Name" class="form-label">Your Name</label>
-                      <input type="text" name="name" class="form-control" id="Name" required>
+                    <div style="display: flex; text-align: left; gap: 30%;">
+                      <label for="fname" class="form-label">First Name</label>
+                      <label for="lname" class="form-label">Last Name</label>
+                    </div>
+                    <!-- first name last name inputs -->
+                        <div style="display: flex;">
+                            <input type="text" name="fname" class="form-control" id="fname" required>
+                            <input type="text" name="lname" class="form-control" id="lname" required>
+
+                        </div>
+                      
                       <div class="invalid-feedback">Please, enter your name!</div>
                     </div>
 
