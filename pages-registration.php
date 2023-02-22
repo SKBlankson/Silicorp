@@ -63,7 +63,7 @@
                     <p class="text-center small">Enter your personal details to create account</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" novalidate>
+                  <form class="row g-3 needs-validation"action = "Registration_process.php" method="GET" novalidate> 
                     <div class="col-12">
                     <div style="display: flex; text-align: left; gap: 30%;">
                       <label for="fname" class="form-label">First Name</label>
@@ -79,18 +79,18 @@
                       <div class="invalid-feedback">Please, enter your name!</div>
                     </div>
 
-                    <div class="col-12">
+                    <!-- <div class="col-12">
                       <label for="email" class="form-label">Your Email</label>
                       <input type="email" name="email" class="form-control" id="email" required>
                       <div class="invalid-feedback">Please enter a valid Email adddress!</div>
-                    </div>
+                    </div> -->
 
                     <div class="col-12">
-                      <label for="username" class="form-label">Username</label>
+                      <label for="email" class="form-label">Email</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text" name="username" class="form-control" id="username" required>
-                        <div class="invalid-feedback">Please choose a username.</div>
+                        <input type="text" name="email" class="form-control" id="email" required>
+                        <div class="invalid-feedback">Please enter a valid Email.</div>
                       </div>
                     </div>
 
@@ -108,10 +108,11 @@
                       </div>
                     </div>
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Create Account</button>
+                      <button class="btn btn-primary w-100" type="submit" name = "register" id = "register" onclick="validate_post()">Create Account
+                      </button>
                     </div>
                     <div class="col-12">
-                      <p class="small mb-0">Already have an account? <a href="pages-login.html">Log in</a></p>
+                      <p class="small mb-0">Already have an account? <a href="pages-login.php">Log in</a></p>
                     </div>
                   </form>
 
@@ -149,6 +150,51 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <script type="text/javascript">
+    $(document).on('click','register',function(e){
+      e.preventDefault();
+
+      var fname = document.getElementById('fname').value;
+      var lname = document.getElementById('lname').value;
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+      var regbutton = document.getElementById('register');
+
+      var expression = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+      if(!email.match(expression)){
+      alert('email is not valid')
+    
+      //call the post method
+      // loadDoc(uname, upass, regbutton);
+    }
+      else{
+      $.ajax({
+        url: 'Registration_process.php';
+        type: 'GET';
+        data:{
+          fname:fname,
+          lname:lname,
+          email:email,
+          password:password
+        }
+        success: function(response){
+          if (response.d == true) {
+                    alert("You will now be redirected.");
+                    window.location = "index.php";
+                }
+            },
+        failure: function (response) {
+                alert(response.d);
+            }
+        })
+      }
+    }
+
+    
+
+  </script>
 
 </body>
 
