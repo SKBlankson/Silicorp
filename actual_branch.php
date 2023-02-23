@@ -47,7 +47,7 @@
     <aside id="sidebar" class="sidebar">
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-grid"></i><span>Dashboard</span></a></li>
-            <li class="nav-item"><a class="nav-link collapsed" data-bs-target="#Data_Repository-nav" data-bs-toggle="collapse" href="tables-general.html"><i class="bi bi-card-list"></i><span>Data Repository</span></a><ul id="Data_Repository-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav"><li><a href="actual_employees.html"><i class="bi bi-circle"></i><span>Employees</span></a></li><li><a href="actual_branch.html"><i class="bi bi-circle"></i><span>Branch</span></a></li><li><a href="actual_fabricators.html"><i class="bi bi-circle"></i><span>Fabricators</span></a></li><li><a href="actual_integrators.html"><i class="bi bi-circle"></i><span>Integrators</span></a></li><li><a href="actual_storefronts.html"><i class="bi bi-circle"></i><span>Store-Front Partners</span></a></li></ul></li>
+            <li class="nav-item"><a class="nav-link collapsed" data-bs-target="#Data_Repository-nav" data-bs-toggle="collapse" href="tables-general.php"><i class="bi bi-card-list"></i><span>Data Repository</span></a><ul id="Data_Repository-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav"><li><a href="actual_employees.php"><i class="bi bi-circle"></i><span>Employees</span></a></li><li><a href="actual_branch.php"><i class="bi bi-circle"></i><span>Branch</span></a></li><li><a href="actual_fabricators.php"><i class="bi bi-circle"></i><span>Fabricators</span></a></li><li><a href="actual_integrators.php"><i class="bi bi-circle"></i><span>Integrators</span></a></li><li><a href="actual_storefronts.php"><i class="bi bi-circle"></i><span>Store-front partners</span></a></li></ul></li>
         </ul>
     </aside>
     <main id="main" class="main">
@@ -77,13 +77,8 @@
                                             <th scope="col">Location ID</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td scope="row">1</td>
-                                            <td>Brandon Jacob</td>
-                                            <td>Designer</td>
-                                        </tr>
-                                        <tr></tr>
+                                    <tbody id="branchtable">
+                                      
                                     </tbody>
                                 </table>
                             </div>
@@ -96,6 +91,7 @@
             </div>
         </section>
 
+               
                 <?php
     // Datababse connection parameters
     $servername = "localhost";
@@ -144,7 +140,7 @@
     $offset = ($current_page - 1) * $records_per_page;
 
     // Retrieve the records for the current page
-    $sql = "SELECT Integrator_ID, Integrator_name, Location_ID,Email,Telephone FROM Integrators LIMIT $offset, $records_per_page";
+    $sql = "SELECT Branch_ID,Branch_Name, Location_ID FROM Branch LIMIT $offset, $records_per_page";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -153,18 +149,17 @@
     $tableBody = "";
     foreach ($results as $row) {
         $tableBody .= "<tr>";
-        $tableBody .= "<td>" . $row['Integrator_ID'] . "</td>";
-        $tableBody .= "<td>" . $row['Integrator_name'] . "</td>";
+        $tableBody .= "<td>" . $row['Branch_ID'] . "</td>";
+        $tableBody .= "<td>" . $row['Branch_Name'] . "</td>";
         $tableBody .= "<td>" . $row['Location_ID'] . "</td>";
-        $tableBody .= "<td>" . $row['Email'] . "</td>";
-        $tableBody .= "<td>" . $row['Telephone'] . "</td>";
+        
     
     }
 ?>
 
 <script>
     // set the innerHTML of the table body to the tableBody variable
-document.getElementById("integratortable").innerHTML = "<?php echo $tableBody?>";;
+document.getElementById("branchtable").innerHTML = "<?php echo $tableBody?>";;
 
 
 </script>

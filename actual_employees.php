@@ -47,17 +47,17 @@
     <aside id="sidebar" class="sidebar">
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-grid"></i><span>Dashboard</span></a></li>
-            <li class="nav-item"><a class="nav-link collapsed" data-bs-target="#Data_Repository-nav" data-bs-toggle="collapse" href="tables-general.html"><i class="bi bi-card-list"></i><span>Data Repository</span></a><ul id="Data_Repository-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav"><li><a href="actual_employees.html"><i class="bi bi-circle"></i><span>Employees</span></a></li><li><a href="actual_branch.html"><i class="bi bi-circle"></i><span>Branch</span></a></li><li><a href="actual_fabricators.html"><i class="bi bi-circle"></i><span>Fabricators</span></a></li><li><a href="actual_integrators.html"><i class="bi bi-circle"></i><span>Integrators</span></a></li><li><a href="actual_storefronts.html"><i class="bi bi-circle"></i><span>Store-Front Partners</span></a></li></ul></li>
+            <li class="nav-item"><a class="nav-link collapsed" data-bs-target="#Data_Repository-nav" data-bs-toggle="collapse" href="tables-general.php"><i class="bi bi-card-list"></i><span>Data Repository</span></a><ul id="Data_Repository-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav"><li><a href="actual_employees.php"><i class="bi bi-circle"></i><span>Employees</span></a></li><li><a href="actual_branch.php"><i class="bi bi-circle"></i><span>Branch</span></a></li><li><a href="actual_fabricators.php"><i class="bi bi-circle"></i><span>Fabricators</span></a></li><li><a href="actual_integrators.php"><i class="bi bi-circle"></i><span>Integrators</span></a></li><li><a href="actual_storefronts.php"><i class="bi bi-circle"></i><span>Store-front partners</span></a></li></ul></li>
         </ul>
     </aside>
     <main id="main" class="main">
         <div class="pagetitle">
-            <h1>Branch</h1>
+            <h1>Employees</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                     <li class="breadcrumb-item">Tables</li>
-                    <li class="breadcrumb-item active">Branch</li>
+                    <li class="breadcrumb-item active">Employees</li>
                 </ol>
             </nav>
         </div>
@@ -66,24 +66,26 @@
                 <div class="col-lg-12 col-xl-12 col-xxl-12" style="max-width: 100%;">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Branch</h5>
+                            <h5 class="card-title">Employees</h5>
                             <div style="display: flex;justify-content: space-between;padding-bottom: 15pxs;"><button class="btn btn-success" type="button" style="margin-right: -1px;">+Add Record</button><button class="btn btn-primary" type="button" align="right" style="margin-right: 0px;margin-left: 0px;">Display Graph</button></div>
                             <div>
-                                <table class="table table-striped">
+                                <table class="table table-striped" >
                                     <thead>
                                         <tr>
-                                            <th scope="col">Branch ID</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Location ID</th>
+                                            <th scope="col" >Employee ID</th>
+                                            <th scope="col" >First Name</th>
+                                            <th scope="col" >Last Name</th>
+                                            <th scope="col">Gender</th>
+                                            <th scope="col">DOB</th>
+                                            <th scope="col">Company Email</th>
+                                            <!-- <th scope="col">Personal Email</th> -->
+                                            <th scope="col">Dept_Code</th>
+                                            <th scope="col">Date of Employment</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td scope="row">1</td>
-                                            <td>Brandon Jacob</td>
-                                            <td>Designer</td>
-                                        </tr>
-                                        <tr></tr>
+                                    <tbody id="employeetable">
+                                    
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -95,8 +97,7 @@
                 </div>
             </div>
         </section>
-
-                <?php
+     <?php
     // Datababse connection parameters
     $servername = "localhost";
     $username = "root";
@@ -121,10 +122,10 @@
     }
 
     // Number of records to display per page
-    $records_per_page = 100;
+    $records_per_page = 10;
 
     // Get the total number of records in the table
-    $sql = "SELECT COUNT(*) AS count FROM Integrators";
+    $sql = "SELECT COUNT(*) AS count FROM employee";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -144,7 +145,7 @@
     $offset = ($current_page - 1) * $records_per_page;
 
     // Retrieve the records for the current page
-    $sql = "SELECT Integrator_ID, Integrator_name, Location_ID,Email,Telephone FROM Integrators LIMIT $offset, $records_per_page";
+    $sql = "SELECT Employee_ID,FName,LName,Gender,Date_of_Birth,Company_Email,Personal_Email,Dept_Code,Date_of_Employment FROM employee LIMIT $offset, $records_per_page";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -153,19 +154,22 @@
     $tableBody = "";
     foreach ($results as $row) {
         $tableBody .= "<tr>";
-        $tableBody .= "<td>" . $row['Integrator_ID'] . "</td>";
-        $tableBody .= "<td>" . $row['Integrator_name'] . "</td>";
-        $tableBody .= "<td>" . $row['Location_ID'] . "</td>";
-        $tableBody .= "<td>" . $row['Email'] . "</td>";
-        $tableBody .= "<td>" . $row['Telephone'] . "</td>";
-    
+        $tableBody .= "<td>" . $row['Employee_ID'] . "</td>";
+        $tableBody .= "<td>" . $row['FName'] . "</td>";
+        $tableBody .= "<td>" . $row['LName'] . "</td>";
+        $tableBody .= "<td>" . $row['Gender'] . "</td>";
+        $tableBody .= "<td>" . $row['Date_of_Birth'] . "</td>";
+        $tableBody .= "<td>" . $row['Company_Email'] . "</td>";
+        // $tableBody .= "<td>" . $row['Personal_Email'] . "</td>";
+        $tableBody .= "<td>" . $row['Dept_Code'] . "</td>";
+        $tableBody .= "<td>" . $row['Date_of_Employment'] . "</td>";
+        $tableBody .= "</tr>";
     }
 ?>
 
 <script>
     // set the innerHTML of the table body to the tableBody variable
-document.getElementById("integratortable").innerHTML = "<?php echo $tableBody?>";;
-
+    document.getElementById("employeetable").innerHTML = "<?php echo $tableBody?>";
 
 </script>
     </main>
