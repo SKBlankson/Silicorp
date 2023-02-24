@@ -141,15 +141,8 @@
                                             <th scope="col">Telephone</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td scope="row">1</td>
-                                            <td>Brandon Jacob</td>
-                                            <td>Designer</td>
-                                            <td>28</td>
-                                            <td>2016-05-25</td>
-                                        </tr>
-                                        <tr></tr>
+                                    <tbody id="integratorstable">
+                                       
                                     </tbody>
                                 </table>
                             </div>
@@ -161,6 +154,77 @@
                 </div>
             </div>
         </section>
+        <?php
+    // Datababse connection parameters
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "semi_conductor_management_system";
+
+    // create a connection 
+    $conn = new mysqli($servername,$username,$password,$dbname);
+
+    // check connection
+    if ($conn->connect_error) {
+        //stop executing the code and echo error
+        die("Connection failed: " . $conn->connect_error);
+    } 
+
+    // Create a PDO object to connect to the database
+    try {
+        $pdo = new PDO("mysql:host=localhost;dbname=$dbname", $username, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        echo "Database connection failed: " . $e->getMessage();
+    }
+
+    // Number of records to display per page
+    $records_per_page = 10;
+
+    // Get the total number of records in the table
+    $sql = "SELECT COUNT(*) AS count FROM employee";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_records = $result['count'];
+
+    // Calculate the total number of pages
+    $total_pages = ceil($total_records / $records_per_page);
+
+    // Get the current page number
+    if (isset($_GET['page'])) {
+        $current_page = $_GET['page'];
+    } else {
+        $current_page = 1;
+    }
+
+    // Calculate the offset for the SQL query
+    $offset = ($current_page - 1) * $records_per_page;
+
+    // Retrieve the records for the current page
+    $sql = "SELECT Integrator_ID,Integrator_name,Location_ID,Email,Telephone FROM Integrators LIMIT $offset, $records_per_page";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // create the HTML for the table rows
+    $tableBody = "";
+    foreach ($results as $row) {
+        $tableBody .= "<tr>";
+        $tableBody .= "<td>" . $row['Integrator_ID'] . "</td>";
+        $tableBody .= "<td>" . $row['Integrator_name'] . "</td>";
+        $tableBody .= "<td>" . $row['Location_ID'] . "</td>";
+        $tableBody .= "<td>" . $row['Email'] . "</td>";
+        $tableBody .= "<td>" . $row['Telephone'] . "</td>";
+        
+    }
+?>
+
+<script>
+    // set the innerHTML of the table body to the tableBody variable
+    document.getElementById("integratorstable").innerHTML = "<?php echo $tableBody?>";
+
+</script>
     </main>
     <footer id="footer" class="footer">
         <div class="copyright"><span> © Copyright </span><strong><span>NiceAdmin</span></strong><span>. All Rights Reserved </span></div>

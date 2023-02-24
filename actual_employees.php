@@ -114,12 +114,12 @@
     <!-- End Sidebar-->
     <main id="main" class="main">
         <div class="pagetitle">
-            <h1>Integrators</h1>
+            <h1>Employees</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                     <li class="breadcrumb-item">Tables</li>
-                    <li class="breadcrumb-item active">Integrators</li>
+                    <li class="breadcrumb-item active">Employees</li>
                 </ol>
             </nav>
         </div>
@@ -128,28 +128,26 @@
                 <div class="col-lg-12 col-xl-12 col-xxl-12" style="max-width: 100%;">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Integrators</h5>
+                            <h5 class="card-title">Employees</h5>
                             <div style="display: flex;justify-content: space-between;padding-bottom: 15pxs;"><button class="btn btn-success" type="button" style="margin-right: -1px;">+Add Record</button><button class="btn btn-primary" type="button" align="right" style="margin-right: 0px;margin-left: 0px;">Display Graph</button></div>
                             <div>
-                                <table class="table table-striped">
+                                <table class="table table-striped" >
                                     <thead>
                                         <tr>
-                                            <th scope="col">Integrator ID</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Location</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Telephone</th>
+                                            <th scope="col" >Employee ID</th>
+                                            <th scope="col" >First Name</th>
+                                            <th scope="col" >Last Name</th>
+                                            <th scope="col">Gender</th>
+                                            <th scope="col">DOB</th>
+                                            <th scope="col">Company Email</th>
+                                            <!-- <th scope="col">Personal Email</th> -->
+                                            <th scope="col">Dept_Code</th>
+                                            <th scope="col">Date of Employment</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td scope="row">1</td>
-                                            <td>Brandon Jacob</td>
-                                            <td>Designer</td>
-                                            <td>28</td>
-                                            <td>2016-05-25</td>
-                                        </tr>
-                                        <tr></tr>
+                                    <tbody id="employeetable">
+                                    
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -161,6 +159,81 @@
                 </div>
             </div>
         </section>
+     <?php
+    // Datababse connection parameters
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "semi_conductor_management_system";
+
+    // create a connection 
+    $conn = new mysqli($servername,$username,$password,$dbname);
+
+    // check connection
+    if ($conn->connect_error) {
+        //stop executing the code and echo error
+        die("Connection failed: " . $conn->connect_error);
+    } 
+
+    // Create a PDO object to connect to the database
+    try {
+        $pdo = new PDO("mysql:host=localhost;dbname=$dbname", $username, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        echo "Database connection failed: " . $e->getMessage();
+    }
+
+    // Number of records to display per page
+    $records_per_page = 10;
+
+    // Get the total number of records in the table
+    $sql = "SELECT COUNT(*) AS count FROM employee";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_records = $result['count'];
+
+    // Calculate the total number of pages
+    $total_pages = ceil($total_records / $records_per_page);
+
+    // Get the current page number
+    if (isset($_GET['page'])) {
+        $current_page = $_GET['page'];
+    } else {
+        $current_page = 1;
+    }
+
+    // Calculate the offset for the SQL query
+    $offset = ($current_page - 1) * $records_per_page;
+
+    // Retrieve the records for the current page
+    $sql = "SELECT Employee_ID,FName,LName,Gender,Date_of_Birth,Company_Email,Personal_Email,Dept_Code,Date_of_Employment FROM employee LIMIT $offset, $records_per_page";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // create the HTML for the table rows
+    $tableBody = "";
+    foreach ($results as $row) {
+        $tableBody .= "<tr>";
+        $tableBody .= "<td>" . $row['Employee_ID'] . "</td>";
+        $tableBody .= "<td>" . $row['FName'] . "</td>";
+        $tableBody .= "<td>" . $row['LName'] . "</td>";
+        $tableBody .= "<td>" . $row['Gender'] . "</td>";
+        $tableBody .= "<td>" . $row['Date_of_Birth'] . "</td>";
+        $tableBody .= "<td>" . $row['Company_Email'] . "</td>";
+        // $tableBody .= "<td>" . $row['Personal_Email'] . "</td>";
+        $tableBody .= "<td>" . $row['Dept_Code'] . "</td>";
+        $tableBody .= "<td>" . $row['Date_of_Employment'] . "</td>";
+        $tableBody .= "</tr>";
+    }
+?>
+
+<script>
+    // set the innerHTML of the table body to the tableBody variable
+    document.getElementById("employeetable").innerHTML = "<?php echo $tableBody?>";
+
+</script>
     </main>
     <footer id="footer" class="footer">
         <div class="copyright"><span> © Copyright </span><strong><span>NiceAdmin</span></strong><span>. All Rights Reserved </span></div>

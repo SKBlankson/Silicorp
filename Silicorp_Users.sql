@@ -28,7 +28,9 @@ create table Users(
     LName varchar(50) NOT NULL,
     User_name varchar(50) NOT NULL,
     User_password varchar(255) NOT NULL,
-    User_role varchar(1) NOT NULL
+    User_role varchar(1) NOT NULL,
+    Email varchar(45) UNIQUE NOT NULL
+   
 
 
 );
