@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Pages / Login - NiceAdmin Bootstrap Template</title>
+    <title>Pages / Login </title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i">
     <link rel="stylesheet" href="assets/css/bootstrap-icons.css">
@@ -61,6 +61,9 @@
                                       <!--   <div class="col-12"><a href="index.html">
                                             <p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
                                         </div> -->
+                                    <div class="col-12">
+                                  <p class="small mb-0">Need an account? <a href="pages-registration.php">Sign Up</a></p>
+                                </div>
                                     </form>
                                 </div>
                             </div>
