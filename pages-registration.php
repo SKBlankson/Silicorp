@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -62,15 +65,22 @@
                     <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
                     <p class="text-center small">Enter your personal details to create account</p>
                   </div>
+                  
 
                   <form class="row g-3 needs-validation"action = "Registration_process.php" method="GET" novalidate> 
+                    <?php
+                        if(isset($_SESSION['welcome'])) {
+                            echo "<p>" . $_SESSION['welcome'] . "</p>";
+                            unset($_SESSION['welcome']);
+                        }
+                    ?>
                     <div class="col-12">
                     <div style="display: flex; text-align: left; gap: 30%;">
                       <label for="fname" class="form-label">First Name</label>
                       <label for="lname" class="form-label">Last Name</label>
                     </div>
                     <!-- first name last name inputs -->
-                        <div style="display: flex;">
+                        <div style="display: flex; gap: 5px">
                             <input type="text" name="fname" class="form-control" id="fname" required>
                             <input type="text" name="lname" class="form-control" id="lname" required>
 
@@ -90,27 +100,40 @@
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
                         <input type="text" name="email" class="form-control" id="email" required>
-                        <div class="invalid-feedback">Please enter a valid Email.</div>
+                        <div class="invalid-feedback" id="invalid-email">Please enter a valid Email.</div>
                       </div>
                     </div>
+                    <?php
+                        if(isset($_SESSION['email_error'])) {
+                            echo "<p>" . $_SESSION['email_error'] . "</p>";
+                            unset($_SESSION['email_error']);
+                        }
+                    ?>
 
                     <div class="col-12">
                       <label for="password" class="form-label">Password</label>
                       <input type="password" name="password" class="form-control" id="password" required>
-                      <div class="invalid-feedback">Please enter your password!</div>
+                      <div class="invalid-feedback" id="invalid-password">Please enter your password!</div>
                     </div>
 
                     <div class="col-12">
                       <div class="form-check">
                         <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
                         <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
-                        <div class="invalid-feedback">You must agree before submitting.</div>
+                        <div class="invalid-feedback" id="invalid-submit">You must agree before submitting.</div>
                       </div>
                     </div>
+                    <?php
+                        if(isset($_SESSION['duplicate'])) {
+                          echo "<p>" . $_SESSION['duplicate'] . "</p>";
+                          unset($_SESSION['duplicate']);
+                                      }
+                                        ?>
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit" name = "register" id = "register" onclick="validate_post()">Create Account
+                      <button class="btn btn-primary w-100" type="submit" name = "register" id = "register" onclick = "registration();">Create Account
                       </button>
                     </div>
+                    
                     <div class="col-12">
                       <p class="small mb-0">Already have an account? <a href="pages-login.php">Log in</a></p>
                     </div>
@@ -119,13 +142,7 @@
                 </div>
               </div>
 
-              <div class="credits">
-                <!-- All the links in the footer should remain intact. -->
-                <!-- You can delete the links only if you purchased the pro version. -->
-                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-              </div>
+              
 
             </div>
           </div>
@@ -150,8 +167,39 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-
   <script type="text/javascript">
+    function registration(){
+
+if(validationreg()){
+        $.ajax({
+                url: "Registration_process.php", 
+                type: "GET",
+                data: {"username": User_name, 
+                       "password": User_password 
+                       },
+                dataType: "html",
+                cache: false,
+                beforeSend: function() {    
+                    console.log("Processing...");
+                },
+                success: 
+                      function(data){
+                        if(data == "OK"){
+                            return 0 ;
+                        }else{
+                            return 0;
+                        }
+                    }
+
+        });
+
+    }else{
+        //alert("Incorrect data");
+    }
+}
+
+  </script>
+  <!-- <script type="text/javascript">
     $(document).on('click','register',function(e){
       e.preventDefault();
 
@@ -161,11 +209,9 @@
       var password = document.getElementById('password').value;
       var regbutton = document.getElementById('register');
 
-      var expression = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      // var expression = ;
 
-      if(!email.match(expression)){
-      alert('email is not valid')
-    
+     
       //call the post method
       // loadDoc(uname, upass, regbutton);
     }
@@ -180,21 +226,22 @@
           password:password
         }
         success: function(response){
-          if (response.d == true) {
-                    alert("You will now be redirected.");
-                    window.location = "index.php";
-                }
+              loadDoc(fname,)
+              alert('success')
             },
+          }
         failure: function (response) {
-                alert(response.d);
+                alert('failure');
             }
-        })
-      }
-    }
+        });
+      
+    
 
     
 
-  </script>
+  </script> -->
+
+
 
 </body>
 

@@ -1,3 +1,6 @@
+<?php
+session_start(); 
+?>
 <?php 
 
 //check if register form was submited
@@ -11,11 +14,14 @@ if (isset($_GET['register']))
 	$user_email = $_GET['email'];
 	$user_pass = $_GET['password'];
 
+
 	//database connection parameters
 	$servername = "localhost";
 	$username = "root";
 	$password = "";
 	$dbname = "silicorp";
+
+	$expression = '/^[A-Za-z]+(\.[A-Za-z]+)?@amd\.cm$/';
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
@@ -23,56 +29,62 @@ if (isset($_GET['register']))
 	if ($conn->connect_error) {
 		//stop executing the code and echo error
 	  die("Connection failed: " . $conn->connect_error);
-	} 
+	}} 
 
 	//encrypt password
-	//use the php password_hard function
+	//use the php password_hash function
 	$encrypted_pass = password_hash($user_pass, PASSWORD_DEFAULT);
 
-	//write query
-	//user role (1 is admin, 2 is standard user)
-	//user status( 1 is active, 2 is inactive)
-	$sql = "INSERT INTO users (FName, LName,User_name, User_password, User_role)
-	VALUES ('$user_fname','$user_lname', '$user_email','$encrypted_pass', '1')";
+	
 
-	// check if query worked
-	if ($conn->query($sql) === TRUE) {
-	  
-		//redirect to homepage
-		header("Location: index.html");
-		exit();
+	$sql_search = "select *from users where User_name = '$user_email'";
 
-	} else {
-		//echo error but continue executing the code to close the session
-	  echo "Error: " . $sql . "<br>" . $conn->error;
+	$result = mysqli_query($conn, $sql_search);  
+    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);  
+    $count = mysqli_num_rows($result);	
+    $email_error = "Wrong Email format, please re-enter. format: firstname.lastname@amd.cm";
+    $duplicate_error = "Username is taken, Email has already been registered";
+    $welcome = "Welcome";
+	
+	$user_email = stripcslashes($user_email);  
+    $user_email = mysqli_real_escape_string($conn, $user_email); 
+    
+    
+	if ($count === 0) {
+	    if (preg_match($expression, $user_email)) {
+	        //write query
+	        $query = "INSERT INTO users (FName, LName, User_name, User_password, User_role)
+	                  VALUES ('$user_fname', '$user_lname', '$user_email', '$encrypted_pass', '1')";
+	        $conn->query($query);
+
+	        $_SESSION['user_email'] = $user_email;
+	        $_SESSION['welcome'] = $welcome;
+
+	        sleep(2);
+	        header("Location: pages-login.php");
+	        exit();
+	    }
+		else{
+    		$_SESSION['email_error']  = $email_error;
+    		header('Location: pages-registration.php');
+    		exit();
+    	}
 	}
+    	
+    else{
+		$_SESSION['duplicate'] = $duplicate_error;
+    	header("Location: pages-registration.php");
+		exit();
+			}
+		
 
-	//close database connection
+	
 	$conn->close();
-}
-
-	// $expression = "/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/";
-
-    // if($email.match($expression)){
-    //   alert('email is valid')
-    //   //call the post method
-    //   loadDoc(fname,lname,email, password, regbutton);
-    // }
-    // else{
-    //   alert('email is wrong')
-    //   header("Location: pages-registration.php");
-    //   exit();
-    //   return false;
-    // }
-
-else
-{
-	//redirect to register page
-	echo("I don't think this worked");
-	header("Location: pages-registration.php");
-	exit();
-}
 
 
+    
 
+	
+
+   
 ?>
