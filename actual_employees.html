@@ -74,7 +74,7 @@
             </a>
           </li>
           <li>
-            <a href="actual_storefront.html">
+            <a href="actual_storefronts.html">
               <i class="bi bi-circle"></i><span>Store-front partners</span>
             </a>
           </li>
