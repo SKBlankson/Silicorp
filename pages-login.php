@@ -1,3 +1,6 @@
+   <?php
+    session_start();
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,7 +50,13 @@
                                        <!--  <div class="col-12">
                                             <div class="form-check"><input type="checkbox" class="form-check-input" name="remember" value="true" id="rememberMe"><label class="form-label form-check-label" for="rememberMe">Remember me</label></div>
                                         </div> -->
-                                        <input type="submit" name="login-pages" value="Login">
+                                        <input type="submit" name="login-pages" value="Login" onclick = "login();">
+                                        <?php
+                                            if(isset($_SESSION['error'])) {
+                                                echo "<p>" . $_SESSION['error'] . "</p>";
+                                                unset($_SESSION['error']);
+                                            }
+                                        ?>
                                         <!-- <div class="col-12"><button class="btn btn-primary w-100" name = "pages-login">Login</button></div> -->
                                       <!--   <div class="col-12"><a href="index.html">
                                             <p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
@@ -73,5 +82,36 @@
     <script src="assets/js/vendor/php-email-form/validate.js"></script>
     <script src="assets/js/js/main.js"></script>
 </body>
+<script type="text/javascript">
+    
+function login(){
 
+if(validationLogin()){
+        $.ajax({
+                url: "login_process.php", 
+                type: "POST",
+                data: {"username": User_name, 
+                       "password": User_password 
+                       },
+                dataType: "html",
+                cache: false,
+                beforeSend: function() {    
+                    console.log("Processing...");
+                },
+                success: 
+                      function(data){
+                        if(data == "OK"){
+                            return 0 ;
+                        }else{
+                            return 0;
+                        }
+                    }
+
+        });
+
+    }else{
+        //alert("Incorrect data");
+    }
+}
+</script>
 </html>
