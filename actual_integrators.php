@@ -31,7 +31,7 @@
 
 <body>
     <header class="d-flex align-items-center header fixed-top" id="header">
-        <div class="d-flex justify-content-between align-items-center"><a class="d-flex align-items-center logo" href="index.html"><img src="assets/img/logo.png" alt=""></a><i class="bi bi-list toggle-sidebar-btn"></i></div>
+        <div class="d-flex justify-content-between align-items-center"><a class="d-flex align-items-center logo" href="dashboard.html"><img src="assets/img/logo.png" alt=""></a><i class="bi bi-list toggle-sidebar-btn"></i></div>
         <div class="search-bar">
             <form class="d-flex align-items-center search-form" method="POST" action="#"><input type="text" name="query" placeholder="Search" title="Enter search keyword"><button type="submit" title="Search"><i class="bi bi-search"></i></button></form>
         </div>

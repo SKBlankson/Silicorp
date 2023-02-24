@@ -18,9 +18,7 @@ CREATE TABLE Bonus_Class(
 CREATE TABLE Employee(
 	Employee_ID varchar(10) PRIMARY KEY,
 	FName varchar(50) NOT NULL,
-	
-
-	 varchar(50) NOT NULL,
+	LName varchar(50) NOT NULL,
 	Gender BOOLEAN NOT NULL,
 	Date_of_Birth DATE,
 	Company_Email varchar(45) UNIQUE NOT NULL,

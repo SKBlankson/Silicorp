@@ -19,7 +19,7 @@ if (isset($_GET['register']))
 	$servername = "localhost";
 	$username = "root";
 	$password = "";
-	$dbname = "silicorp";
+	$dbname = "Silicorp_Users";
 
 	$expression = '/^[A-Za-z]+(\.[A-Za-z]+)?@amd\.cm$/';
 

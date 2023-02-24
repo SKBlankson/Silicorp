@@ -31,7 +31,7 @@
 
 <body>
     <header class="d-flex align-items-center header fixed-top" id="header">
-        <div class="d-flex justify-content-between align-items-center"><a class="d-flex align-items-center logo" href="index.html"><img src="assets/img/logo.png" alt=""></a><i class="bi bi-list toggle-sidebar-btn"></i></div>
+        <div class="d-flex justify-content-between align-items-center"><a class="d-flex align-items-center logo" href="dashboard.html"><img src="assets/img/logo.png" alt=""></a><i class="bi bi-list toggle-sidebar-btn"></i></div>
         <div class="search-bar">
             <form class="d-flex align-items-center search-form" method="POST" action="#"><input type="text" name="query" placeholder="Search" title="Enter search keyword"><button type="submit" title="Search"><i class="bi bi-search"></i></button></form>
         </div>
@@ -91,71 +91,71 @@
             </div>
         </section>
 
-               
-                <?php
-    // Datababse connection parameters
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "semi_conductor_management_system";
+                                   
+                                    <?php
+                        // Datababse connection parameters
+                        $servername = "localhost";
+                        $username = "root";
+                        $password = "";
+                        $dbname = "semi_conductor_management_system";
 
-    // create a connection 
-    $conn = new mysqli($servername,$username,$password,$dbname);
+                        // create a connection 
+                        $conn = new mysqli($servername,$username,$password,$dbname);
 
-    // check connection
-    if ($conn->connect_error) {
-        //stop executing the code and echo error
-        die("Connection failed: " . $conn->connect_error);
-    } 
+                        // check connection
+                        if ($conn->connect_error) {
+                            //stop executing the code and echo error
+                            die("Connection failed: " . $conn->connect_error);
+                        } 
 
-    // Create a PDO object to connect to the database
-    try {
-        $pdo = new PDO("mysql:host=localhost;dbname=$dbname", $username, $password);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        echo "Database connection failed: " . $e->getMessage();
-    }
+                        // Create a PDO object to connect to the database
+                        try {
+                            $pdo = new PDO("mysql:host=localhost;dbname=$dbname", $username, $password);
+                            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                        } catch (PDOException $e) {
+                            echo "Database connection failed: " . $e->getMessage();
+                        }
 
-    // Number of records to display per page
-    $records_per_page = 100;
+                        // Number of records to display per page
+                        $records_per_page = 100;
 
-    // Get the total number of records in the table
-    $sql = "SELECT COUNT(*) AS count FROM Integrators";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $total_records = $result['count'];
+                        // Get the total number of records in the table
+                        $sql = "SELECT COUNT(*) AS count FROM Integrators";
+                        $stmt = $pdo->prepare($sql);
+                        $stmt->execute();
+                        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                        $total_records = $result['count'];
 
-    // Calculate the total number of pages
-    $total_pages = ceil($total_records / $records_per_page);
+                        // Calculate the total number of pages
+                        $total_pages = ceil($total_records / $records_per_page);
 
-    // Get the current page number
-    if (isset($_GET['page'])) {
-        $current_page = $_GET['page'];
-    } else {
-        $current_page = 1;
-    }
+                        // Get the current page number
+                        if (isset($_GET['page'])) {
+                            $current_page = $_GET['page'];
+                        } else {
+                            $current_page = 1;
+                        }
 
-    // Calculate the offset for the SQL query
-    $offset = ($current_page - 1) * $records_per_page;
+                        // Calculate the offset for the SQL query
+                        $offset = ($current_page - 1) * $records_per_page;
 
-    // Retrieve the records for the current page
-    $sql = "SELECT Branch_ID,Branch_Name, Location_ID FROM Branch LIMIT $offset, $records_per_page";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        // Retrieve the records for the current page
+                        $sql = "SELECT Branch_ID,Branch_Name, Location_ID FROM Branch LIMIT $offset, $records_per_page";
+                        $stmt = $pdo->prepare($sql);
+                        $stmt->execute();
+                        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // create the HTML for the table rows
-    $tableBody = "";
-    foreach ($results as $row) {
-        $tableBody .= "<tr>";
-        $tableBody .= "<td>" . $row['Branch_ID'] . "</td>";
-        $tableBody .= "<td>" . $row['Branch_Name'] . "</td>";
-        $tableBody .= "<td>" . $row['Location_ID'] . "</td>";
-        
-    
-    }
-?>
+                        // create the HTML for the table rows
+                        $tableBody = "";
+                        foreach ($results as $row) {
+                            $tableBody .= "<tr>";
+                            $tableBody .= "<td>" . $row['Branch_ID'] . "</td>";
+                            $tableBody .= "<td>" . $row['Branch_Name'] . "</td>";
+                            $tableBody .= "<td>" . $row['Location_ID'] . "</td>";
+                            
+                        
+                        }
+                    ?>
 
 <script>
     // set the innerHTML of the table body to the tableBody variable

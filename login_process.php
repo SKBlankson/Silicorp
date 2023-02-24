@@ -12,7 +12,7 @@
 	$servername = "localhost";
 	$username = "root";
 	$password = "";
-	$dbname = "silicorp";
+	$dbname = "Silicorp_Users";
 
 	// Create connection
 	$con = new mysqli($servername, $username, $password, $dbname);
@@ -44,7 +44,7 @@
     	$_SESSION['User_id'] = $user_id;
     	$_SESSION['User_password'] = $user_pass;
     	
-    	header('Location: index.html');
+    	header('Location: actual_branch.php');
     	exit();
     	alert('this works i guess');
     }
