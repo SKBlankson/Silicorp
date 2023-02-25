@@ -72,7 +72,7 @@
                                 <div class="col-12"><label class="form-label form-label" for="inputNanme4">Branch ID</label><input class="form-control form-control" type="text" id="branchid"></div>
                                 <div class="col-12"><label class="form-label form-label" for="inputNanme4">&nbsp;Branch Name</label><input class="form-control form-control" type="text" id="branchname"></div>
                                 <div class="col-12"><label class="form-label form-label" for="inputNanme4">Location ID</label><input class="form-control form-control" type="text" id="locationid"></div>
-                                <div class="text-center"><button class="btn btn-primary" type="button" id="submit_form">Submit</button><button class="btn btn-secondary" type="reset">Reset</button></div>
+                                <div class="text-center"><button class="btn btn-primary" type="button" id="submit_form" onclick="addbranch()">Submit</button><button class="btn btn-secondary" type="reset">Reset</button></div>
                             </form>
                         </div>
                     </div>
@@ -84,44 +84,46 @@
         </main>
 
     <script type="text/javascript">
-    //  function addbranch() {
-    // // event.preventDefault();
-    //   var formname = $('#branchform').val();
-    //   var branchid = $('#branchid').val();
-    //   var branchname = $('#branchname').val();
-    //   var locationid = $('#locationid').val();
-    //   var data = {
-    //     formid: formname,
-    //     branchid: branchid,
-    //     branchname: branchname,
-    //     locationid: locationid
-    //   };
+     function addbranch() {
+    // event.preventDefault();
+      var formname = $('#branchform').val();
+      var branchid = $('#branchid').val();
+      var branchname = $('#branchname').val();
+      var locationid = $('#locationid').val();
+      var data = {
+        formid: formname,
+        branchid: branchid,
+        branchname: branchname,
+        locationid: locationid
+      };
 
 
-    //   console.log(data);
-    //   // $.ajax({
-    //   //   url: "form_proc.php",
-    //   //   type: "POST",
-    //   //   data: data,
-    //   //   success: function(response) {
-    //   //     console.log('Request successful!');
-    //   //     console.log(response);
-    //   //     // alert("Record was added successfully!");
-    //   //   },
-    //   //   error: function(xhr, status, error) {
-    //   //     console.log('Request failed!');
-    //   //     console.log(status);
-    //   //     console.log(error);
-    //   //     alert("Record failed to add");
-    //   //   }
-    //   };
+      // console.log(data);
+      $.ajax({
+        url: "form_proc.php",
+        type: "POST",
+        data: data,
+        success: function(response) {
+          console.log('Request successful!');
+          console.log(response);
+          // alert("Record was added successfully!");
+        },
+        error: function(xhr, status, error) {
+          console.log('Request failed!');
+          console.log(status);
+          console.log(error);
+          alert("Record failed to add");
+        }
+      });
+
+    }
       
-    //   return false;
+      // return false;
 
 
     // $('#submit_form').click(function(event){
 
-            console.log("hi");
+            // console.log("hi");
 
 
 
