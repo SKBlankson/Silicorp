@@ -72,7 +72,7 @@
                                 <div class="col-12"><label class="form-label form-label" for="inputNanme4">Branch ID</label><input class="form-control form-control" type="text" id="branchid"></div>
                                 <div class="col-12"><label class="form-label form-label" for="inputNanme4">&nbsp;Branch Name</label><input class="form-control form-control" type="text" id="branchname"></div>
                                 <div class="col-12"><label class="form-label form-label" for="inputNanme4">Location ID</label><input class="form-control form-control" type="text" id="locationid"></div>
-                                <div class="text-center"><button class="btn btn-primary" type="submit" id="submit_form" onclick="addbranch()">Submit</button><button class="btn btn-secondary" type="reset">Reset</button></div>
+                                <div class="text-center"><button class="btn btn-primary" type="button" id="submit_form">Submit</button><button class="btn btn-secondary" type="reset">Reset</button></div>
                             </form>
                         </div>
                     </div>
@@ -81,47 +81,59 @@
                 </div>
             </div>
         </section>
+        </main>
 
-<script type="text/javascript">
- function addbranch() {
-  var formname = $('#branchform').val();
-  var branchid = $('#branchid').val();
-  var branchname = $('#branchname').val();
-  var locationid = $('#locationid').val();
-  var data = {
-    formid: formname,
-    branchid: branchid,
-    branchname: branchname,
-    locationid: locationid
-  };
-
-  $.ajax({
-    url: "form_proc.php",
-    type: "POST",
-    data: data,
-    success: function(response) {
-      console.log('Request successful!');
-      console.log(response);
-      // alert("Record was added successfully!");
-    },
-    error: function(xhr, status, error) {
-      console.log('Request failed!');
-      console.log(status);
-      console.log(error);
-      alert("Record failed to add");
-    }
-  });
-  
-  return false;
-}
-
-$('#submit_form').click(addbranch);
-
-</script>
+    <script type="text/javascript">
+    //  function addbranch() {
+    // // event.preventDefault();
+    //   var formname = $('#branchform').val();
+    //   var branchid = $('#branchid').val();
+    //   var branchname = $('#branchname').val();
+    //   var locationid = $('#locationid').val();
+    //   var data = {
+    //     formid: formname,
+    //     branchid: branchid,
+    //     branchname: branchname,
+    //     locationid: locationid
+    //   };
 
 
+    //   console.log(data);
+    //   // $.ajax({
+    //   //   url: "form_proc.php",
+    //   //   type: "POST",
+    //   //   data: data,
+    //   //   success: function(response) {
+    //   //     console.log('Request successful!');
+    //   //     console.log(response);
+    //   //     // alert("Record was added successfully!");
+    //   //   },
+    //   //   error: function(xhr, status, error) {
+    //   //     console.log('Request failed!');
+    //   //     console.log(status);
+    //   //     console.log(error);
+    //   //     alert("Record failed to add");
+    //   //   }
+    //   };
+      
+    //   return false;
 
-    </main>
+
+    // $('#submit_form').click(function(event){
+
+            console.log("hi");
+
+
+
+
+
+    // });
+
+    </script>
+
+
+
+    
     <footer id="footer" class="footer">
         <div class="copyright"><span> © Copyright </span><strong><span>NiceAdmin</span></strong><span>. All Rights Reserved </span></div>
         <div class="credits"><span> Designed by </span><a href="https://bootstrapmade.com/">BootstrapMade</a></div>
