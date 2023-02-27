@@ -12,7 +12,7 @@
 	$servername = "localhost";
 	$username = "root";
 	$password = "";
-	$dbname = "Silicorp_Users";
+	$dbname = "semi_conductor_management_system";
 
 	// Create connection
 	$con = new mysqli($servername, $username, $password, $dbname);
@@ -44,7 +44,7 @@
     	$_SESSION['User_id'] = $user_id;
     	$_SESSION['User_password'] = $user_pass;
     	
-    	header('Location: actual_branch.php');
+    	header('Location: index.html');
     	exit();
     	alert('this works i guess');
     }

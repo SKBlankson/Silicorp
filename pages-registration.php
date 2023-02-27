@@ -8,7 +8,7 @@ session_start();
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Pages / Register </title>
+  <title>Pages / Register - NiceAdmin Bootstrap Template</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -53,7 +53,7 @@ session_start();
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
                   <img src="assets/img/logo.png" alt="">
-                  <span class="d-none d-lg-block"></span>
+                  <span class="d-none d-lg-block">NiceAdmin</span>
                 </a>
               </div><!-- End Logo -->
 
@@ -168,34 +168,49 @@ session_start();
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   <script type="text/javascript">
+
+    
     function registration(){
 
-if(validationreg()){
-        $.ajax({
-                url: "Registration_process.php", 
-                type: "GET",
-                data: {"username": User_name, 
-                       "password": User_password 
-                       },
-                dataType: "html",
-                cache: false,
-                beforeSend: function() {    
-                    console.log("Processing...");
-                },
-                success: 
-                      function(data){
-                        if(data == "OK"){
-                            return 0 ;
-                        }else{
-                            return 0;
-                        }
-                    }
+      // var username = document.getElementById('username').value;
+      // var password = document.getElementById('password').value;
 
-        });
+      var fname = $('#user_fname').val();
+      var lname = $('#user_lname').val();
+      var username = $('#user_email').val();
+      var pass = $('#password').val();
+      var data = {
+        formid: formname,
+        branchid: branchid,
+        branchname: branchname,
+        locationid: locationid
+      };
 
-    }else{
-        //alert("Incorrect data");
-    }
+      console.log(data);
+      if(validationreg()){
+              $.ajax({
+                      url: "Registration_process.php", 
+                      type: "GET",
+                      data: data,
+                      dataType: "html",
+                      cache: false,
+                      beforeSend: function() {    
+                          console.log("Processing...");
+                      },
+                      success: 
+                            function(data){
+                              if(data == "OK"){
+                                  return 0 ;
+                              }else{
+                                  return 0;
+                              }
+                          }
+
+              });
+
+          }else{
+              //alert("Incorrect data");
+          }
 }
 
   </script>
