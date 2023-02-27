@@ -71,7 +71,37 @@
                             <form class="row g-3" id="branchform">
                                 <div class="col-12"><label class="form-label form-label" for="inputNanme4">Branch ID</label><input class="form-control form-control" type="text" id="branchid"></div>
                                 <div class="col-12"><label class="form-label form-label" for="inputNanme4">&nbsp;Branch Name</label><input class="form-control form-control" type="text" id="branchname"></div>
-                                <div class="col-12"><label class="form-label form-label" for="inputNanme4">Location ID</label><input class="form-control form-control" type="text" id="locationid"></div>
+<!--                                <div class="col-12"><label class="form-label form-label" for="inputNanme4">Location ID</label><input class="form-control form-control" type="text" id="locationid"></div>-->
+                                <div  class="col-12">
+                                <label class="form-label form-label" for="inputNanme4">Location ID</label>
+                                <?php
+                                // establish database connection
+                                $servername = "localhost";
+                                $username = "root";
+                                $password = "";
+                                $dbname = "semi_conductor_management_system";
+
+                                $conn = new mysqli($servername, $username, $password, $dbname);
+
+                                // query the database for options
+                                $sql = "SELECT Location_ID FROM location";
+                                $result = $conn->query($sql);
+
+                                // create dropdown list
+                                echo "<select name='options' class='form-control' id='locationid''>";
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<option  value=' " . $row["Location_ID"] . "'>" . $row["Location_ID"] . "</option>";
+                                    }
+                                } else {
+                                    echo "<option value=''>No options available</option>";
+                                }
+                                echo "</select>";
+
+                                // close database connection
+                                $conn->close();
+                                ?>
+                                </div>
                                 <div class="text-center"><button class="btn btn-primary" type="submit" id="submit_form">Submit</button><button class="btn btn-secondary" type="reset">Reset</button></div>
                             </form>
                         </div>
@@ -83,8 +113,7 @@
         </section>
         </main>
     <footer id="footer" class="footer">
-        <div class="copyright"><span> © Copyright </span><strong><span>NiceAdmin</span></strong><span>. All Rights Reserved </span></div>
-        <div class="credits"><span> Designed by </span><a href="https://bootstrapmade.com/">BootstrapMade</a></div>
+        
     </footer><a class="d-flex justify-content-center align-items-center back-to-top" href="#"><i class="bi bi-arrow-up-short"></i></a>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/vendor/apexcharts/apexcharts.min.js"></script>
