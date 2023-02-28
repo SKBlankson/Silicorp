@@ -105,7 +105,7 @@ session_start();
                     </div>
                     <?php
                         if(isset($_SESSION['email_error'])) {
-                            echo "<p>" . $_SESSION['email_error'] . "</p>";
+                            echo '<p style="color:red">' . $_SESSION['email_error'] . '</p>';
                             unset($_SESSION['email_error']);
                         }
                     ?>
@@ -124,11 +124,12 @@ session_start();
                       </div>
                     </div>
                     <?php
+                        
                         if(isset($_SESSION['duplicate'])) {
-                          echo "<p>" . $_SESSION['duplicate'] . "</p>";
-                          unset($_SESSION['duplicate']);
-                                      }
-                                        ?>
+                             echo '<p style="color:red">' . $_SESSION['duplicate'] . '</p>';
+                             unset($_SESSION['duplicate']);
+                                  }
+                                         ?> 
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit" name = "register" id = "register" onclick = "registration();">Create Account
                       </button>
