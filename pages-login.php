@@ -54,7 +54,7 @@
                                         <input type="submit" name="login-pages" value="Login" onclick = "login()">
                                         <?php
                                             if(isset($_SESSION['error'])) {
-                                                echo "<p>" . $_SESSION['error'] . "</p>";
+                                                echo '<p style="color:red">' . $_SESSION['error'] . '</p>';
                                                 unset($_SESSION['error']);
                                             }
                                         ?>
