@@ -91,7 +91,7 @@
                                 echo "<select name='options' class='form-control' id='locationid''>";
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
-                                        echo "<option  value=' " . $row["Location_ID"] . "'>" . $row["Location_ID"] . "</option>";
+                                        echo "<option  value='".$row["Location_ID"]."'>".$row["Location_ID"]."</option>";
                                     }
                                 } else {
                                     echo "<option value=''>No options available</option>";
