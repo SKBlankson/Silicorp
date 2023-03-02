@@ -155,18 +155,70 @@
                 $tableBody .= "<td>" . $row['Branch_ID'] . "</td>";
                 $tableBody .= "<td>" . $row['Branch_Name'] . "</td>";
                 $tableBody .= "<td>" . $row['Location_ID'] . "</td>";
-                $tableBody .= "<td align='right'><button type='button' class='btn btn-danger' onclick='confirmdelete(this.id)' id='$row[Branch_ID]'><i class='bi bi-exclamation-octagon'></i></button>   <button type='button' class='btn btn-info'><i class='bi bi-info-circle'></i></button></td>";
+                $tableBody .= "<td align='right'><button type='button' class='btn btn-danger' onclick='confirmdelete(this.id)' id='$row[Branch_ID]'><i class='bi bi-exclamation-octagon'></i></button>  \
+ <button type='button' class='btn btn-info' onclick='showUpdateModal()' id='$row[Branch_ID]'><i class='bi bi-info-circle'></i></button></td>";
                 
             }
 
 
         ?>
+
+        <!-- Vertically centered Modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
+            Vertically centered
+        </button>
+        <div class="modal fade" id="verticalycentered" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Update Branch</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="row g-3" id="branchform">
+                            <div class="col-12"><label class="form-label form-label" for="inputNanme4">Branch ID</label><input class="form-control form-control" type="text" id="branchid"></div>
+                            <div class="col-12"><label class="form-label form-label" for="inputNanme4">&nbsp;Branch Name</label><input class="form-control form-control" type="text" id="branchname"></div>
+                            <!--                                <div class="col-12"><label class="form-label form-label" for="inputNanme4">Location ID</label><input class="form-control form-control" type="text" id="locationid"></div>-->
+                            <div  class="col-12">
+                                <label class="form-label form-label" for="inputNanme4">Location ID</label>
+                                <?php
+
+                                // query the database for options
+                                $sql = "SELECT Location_ID FROM location";
+                                $result = $conn->query($sql);
+
+                                // create dropdown list
+                                echo "<select name='options' class='form-control' id='locationid''>";
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<option  value='".$row["Location_ID"]."'>".$row["Location_ID"]."</option>";
+                                    }
+                                } else {
+                                    echo "<option value=''>No options available</option>";
+                                }
+                                echo "</select>";
+
+                                // close database connection
+                                $conn->close();
+                                ?>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End Vertically centered Modal-->
         
         
 
 <script>
     // set the innerHTML of the table body to the tableBody variable
 document.getElementById("branchtable").innerHTML = "<?php echo $tableBody?>";
+    
+function showUpdateModal() {
+        $('#verticalycentered').modal('show');
+    }
 
 // delete functiion
 function confirmdelete(buttonId) {
@@ -205,6 +257,27 @@ function confirmdelete(buttonId) {
 
 
 </script>
+        <!-- Vertically centered Modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
+            Vertically centered
+        </button>
+        <div class="modal fade" id="verticalycentered" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Vertically Centered</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Non omnis incidunt qui sed occaecati magni asperiores est mollitia. Soluta at et reprehenderit. Placeat autem numquam et fuga numquam. Tempora in facere consequatur sit dolor ipsum. Consequatur nemo amet incidunt est facilis. Dolorem neque recusandae quo sit molestias sint dignissimos.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End Vertically centered Modal-->
     </main>
     <footer id="footer" class="footer">
        
