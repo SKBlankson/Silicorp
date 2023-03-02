@@ -69,8 +69,8 @@
                     <div class="card">
                         <div class="card-body">
                             <form class="row g-3" id="branchform">
-                                <div class="col-12"><label class="form-label form-label" for="inputNanme4">Branch ID</label><input class="form-control form-control" type="text" id="branchid"></div>
-                                <div class="col-12"><label class="form-label form-label" for="inputNanme4">&nbsp;Branch Name</label><input class="form-control form-control" type="text" id="branchname"></div>
+                                <div class="col-12"><label class="form-label form-label" for="inputNanme4" >Branch ID</label><input class="form-control form-control" type="text" id="branchid" required></div>
+                                <div class="col-12"><label class="form-label form-label" for="inputNanme4" >&nbsp;Branch Name</label><input class="form-control form-control" type="text" id="branchname" required></div>
 <!--                                <div class="col-12"><label class="form-label form-label" for="inputNanme4">Location ID</label><input class="form-control form-control" type="text" id="locationid"></div>-->
                                 <div  class="col-12">
                                 <label class="form-label form-label" for="inputNanme4">Location ID</label>
@@ -91,7 +91,7 @@
                                 echo "<select name='options' class='form-control' id='locationid''>";
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
-                                        echo "<option  value=' " . $row["Location_ID"] . "'>" . $row["Location_ID"] . "</option>";
+                                        echo "<option  value='".$row["Location_ID"]."'>".$row["Location_ID"]."</option>";
                                     }
                                 } else {
                                     echo "<option value=''>No options available</option>";
@@ -102,7 +102,8 @@
                                 $conn->close();
                                 ?>
                                 </div>
-                                <div class="text-center"><button class="btn btn-primary" type="submit" id="submit_form">Submit</button><button class="btn btn-secondary" type="reset">Reset</button></div>
+                                <!-- on click puts data into file, closes tab and refreshes parent page -->
+                                <div class="text-center"><button class="btn btn-primary" type="submit" id="submit_form" action="form_proc.php" method="POST" onClick="opener.location.reload();window.close()">Submit</button><button class="btn btn-secondary" type="reset">Reset</button></div> 
                             </form>
                         </div>
                     </div>
@@ -137,10 +138,12 @@
     <script src="assets/js/js/js/main.js"></script>
 
     <script>
+
+
         $(document).ready(
      function() {
-    $('#submit_form').click(function(event) {
-    event.preventDefault();
+        $('#submit_form').click(function(event) {
+        event.preventDefault();
       var formname = 'branchform';
       var branchid = $('#branchid').val();
       var branchname = $('#branchname').val();
@@ -152,6 +155,12 @@
         locationid: locationid
       };
 
+      var regex = /^[A-Z]{3}[A-Z]{3,4}[0-9]?$/;
+      if (!regex.test(branchid)) {
+        alert("The Branch ID does not match the required format (e.g. BAR). Please correct your entry and try again.");
+        location.reload();
+        return;
+    }
 
       // console.log(data);
       $.ajax({
@@ -160,6 +169,8 @@
         data: $.param(data),
         success: function(response) {
           console.log('Request successfully sent to server!');
+          window.location.replace('actual_branch.php');
+          exit();
           // console.log(response);
           // alert("Record was added successfully!");
         },
