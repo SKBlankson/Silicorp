@@ -1,5 +1,4 @@
 <?php
-  // establish database connection
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -7,20 +6,35 @@ $dbname = "semi_conductor_management_system";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+echo 'i am processing';
 
 // check if the delete button was clicked
-if(isset($_POST['deletebranch'])) {
+if(isset($_GET['deletebranch'])) {
     // get the item ID from the POST data
-    $item_id = $_POST['item_id'];
+    $deletethis = $_GET['deleteid'];
+    echo '$deletethis';
 
-    // display a confirmation prompt
-    echo "<script>
-        var confirm_delete = confirm('Are you sure you want to delete this item?');
-        if(confirm_delete == true) {
-            // delete the item from the database
-            window.location.href = 'delete_item.php?id=".$item_id."';
-        }
-    </script>";
+    // sql to delete a record
+    $sql = "DELETE FROM branch WHERE Branch_ID='$deletethis'";
+
+
+    // execute query
+    if ($conn->query($sql) === TRUE) {
+        echo 'record deleted';
+//        header('LOCATION: actual_branch.php');
+        exit;
+    } else {
+        echo "Error deleting record: " . $conn->error;
+    }
+
+    // close connection
+    $conn->close();
 }
 ?>
+
+
+
+
+}
+
 

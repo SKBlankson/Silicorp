@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="assets/css/vendor/remixicon/remixicon.css">
     <link rel="stylesheet" href="assets/css/vendor/simple-datatables/style.css">
     <link rel="stylesheet" href="assets/css/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -154,9 +155,8 @@
                 $tableBody .= "<td>" . $row['Branch_ID'] . "</td>";
                 $tableBody .= "<td>" . $row['Branch_Name'] . "</td>";
                 $tableBody .= "<td>" . $row['Location_ID'] . "</td>";
-                $tableBody .= "<td align='right'><button type='button' class='btn btn-danger' onclick='confirmdelete()'><i class='bi bi-exclamation-octagon'></i></button>   <button type='button' class='btn btn-info'><i class='bi bi-info-circle'></i></button></td>";
-
-//                            $tableBody .= "<td><button type='button' class='btn btn-info'><i class='bi bi-info-circle'></i></button>";
+                $tableBody .= "<td align='right'><button type='button' class='btn btn-danger' onclick='confirmdelete(this.id)' id='$row[Branch_ID]'><i class='bi bi-exclamation-octagon'></i></button>   <button type='button' class='btn btn-info'><i class='bi bi-info-circle'></i></button></td>";
+                
             }
 
 
@@ -167,15 +167,40 @@
 <script>
     // set the innerHTML of the table body to the tableBody variable
 document.getElementById("branchtable").innerHTML = "<?php echo $tableBody?>";
-function confirmdelete() {
+
+// delete functiion
+function confirmdelete(buttonId) {
     const confirmation = confirm("Are you sure you want to delete the record?");
     if (confirmation === true) {
-        // Yes was clicked
-        // do something
+        var data = {
+            deleteid: buttonId,
+            deletebranch: true
+        };
+        
+        $.ajax({
+            url: "delete.php",
+            type: "GET",
+            data: data,
+            success: function(response) {
+                // console.log('Request successfully sent to server!');
+                console.log(response)
+                // console.log(response);
+                // alert("Record was added successfully!");
+            },
+            error: function(xhr, status, error) {
+                console.log('Request failed!');
+                console.log(status);
+                console.log(error);
+
+            }
+        });
+
     } else {
-        // No was clicked or the modal was closed
-        // do something else or nothing
+        console.log("Request failed")
     }
+    
+    //reload current page
+    location.reload();
 }
 
 

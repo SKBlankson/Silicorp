@@ -215,47 +215,7 @@ session_start();
 }
 
   </script>
-  <!-- <script type="text/javascript">
-    $(document).on('click','register',function(e){
-      e.preventDefault();
 
-      var fname = document.getElementById('fname').value;
-      var lname = document.getElementById('lname').value;
-      var email = document.getElementById('email').value;
-      var password = document.getElementById('password').value;
-      var regbutton = document.getElementById('register');
-
-      // var expression = ;
-
-     
-      //call the post method
-      // loadDoc(uname, upass, regbutton);
-    }
-      else{
-      $.ajax({
-        url: 'Registration_process.php';
-        type: 'GET';
-        data:{
-          fname:fname,
-          lname:lname,
-          email:email,
-          password:password
-        }
-        success: function(response){
-              loadDoc(fname,)
-              alert('success')
-            },
-          }
-        failure: function (response) {
-                alert('failure');
-            }
-        });
-      
-    
-
-    
-
-  </script> -->
 
 
 
