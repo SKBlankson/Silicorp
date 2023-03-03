@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="assets/css/vendor/remixicon/remixicon.css">
     <link rel="stylesheet" href="assets/css/vendor/simple-datatables/style.css">
     <link rel="stylesheet" href="assets/css/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -63,13 +64,13 @@
         </div>
         <section class="section">
             <div class="row">
-                <div class="col-lg-12 col-xl-12 col-xxl-12" style="max-width: 100%;">
+                    <div class="col-lg-12 col-xl-12 col-xxl-12" style="max-width: 100%;">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Employees</h5>
                             <div style="display: flex;justify-content: space-between;padding-bottom: 15pxs;"><button class="btn btn-success" type="button" style="margin-right: -1px;">+Add Record</button><button class="btn btn-primary" type="button" align="right" style="margin-right: 0px;margin-left: 0px;">Display Graph</button></div>
                             <div>
-                                <table class="table table-striped" >
+                                <table class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th scope="col" >Employee ID</th>
@@ -125,7 +126,7 @@
     $records_per_page = 10;
 
     // Get the total number of records in the table
-    $sql = "SELECT COUNT(*) AS count FROM employee";
+    $sql = "SELECT COUNT(*) AS count FROM Employee";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -145,7 +146,7 @@
     $offset = ($current_page - 1) * $records_per_page;
 
     // Retrieve the records for the current page
-    $sql = "SELECT Employee_ID,FName,LName,Gender,Date_of_Birth,Company_Email,Personal_Email,Dept_Code,Date_of_Employment FROM employee LIMIT $offset, $records_per_page";
+    $sql = "SELECT Employee_ID,FName,LName,Gender,Date_of_Birth,Company_Email,Personal_Email,Dept_Code,Date_of_Employment FROM Employee LIMIT $offset, $records_per_page";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -163,13 +164,52 @@
         // $tableBody .= "<td>" . $row['Personal_Email'] . "</td>";
         $tableBody .= "<td>" . $row['Dept_Code'] . "</td>";
         $tableBody .= "<td>" . $row['Date_of_Employment'] . "</td>";
-        $tableBody .= "</tr>";
+        $tableBody .= "<td align='right'><button type='button' class='btn btn-danger' onclick='confirmdelete(this.id)' id='$row[Employee_ID]'><i class='bi bi-exclamation-octagon'></i></button>  \
+ <button type='button' class='btn btn-info' onclick='showUpdateModal()' id='$row[Employee_ID]'><i class='bi bi-info-circle'></i></button></td>";
     }
 ?>
 
 <script>
     // set the innerHTML of the table body to the tableBody variable
     document.getElementById("employeetable").innerHTML = "<?php echo $tableBody?>";
+
+function showUpdateModal() {
+    $('#verticalycentered').modal('show');
+}
+    // delete functiion
+function confirmdelete(buttonId) {
+    const confirmation = confirm("Are you sure you want to delete the record?");
+    if (confirmation === true) {
+        var data = {
+            deleteid: buttonId,
+            deleteemployee: true
+        };
+        
+        $.ajax({
+            url: "delete.php",
+            type: "GET",
+            data: data,
+            success: function(response) {
+                // console.log('Request successfully sent to server!');
+                console.log(response)
+                // console.log(response);
+                // alert("Record was added successfully!");
+            },
+            error: function(xhr, status, error) {
+                console.log('Request failed!');
+                console.log(status);
+                console.log(error);
+
+            }
+        });
+
+    } else {
+        console.log("Request failed")
+    }
+    
+    //reload current page
+    location.reload();
+}
 
 </script>
     </main>

@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="assets/css/vendor/remixicon/remixicon.css">
     <link rel="stylesheet" href="assets/css/vendor/simple-datatables/style.css">
     <link rel="stylesheet" href="assets/css/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -67,7 +68,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Branch</h5>
-                            <div style="display: flex;justify-content: space-between;padding-bottom: 15pxs;"><button class="btn btn-success" type="button" style="margin-right: -1px;" ><a href="form_branch.php">+Add Record</a></button><button class="btn btn-primary" type="button" align="right" style="margin-right: 0px;margin-left: 0px;">Display Graph</button></div>
+                            <div style="display: flex;justify-content: space-between;padding-bottom: 15pxs;"><button class="btn btn-success" type="button" style="margin-right: -1px;" ><a href="form_branch.php" style="color: white">+Add Record</a></button><button class="btn btn-primary" type="button" align="right" style="margin-right: 0px;margin-left: 0px;">Display Graph</button></div>
                             <div>
                                 <table class="table table-striped">
                                     <thead>
@@ -75,6 +76,8 @@
                                             <th scope="col">Branch ID</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Location ID</th>
+                                            <th scope="col">   </th>
+<!--                                            <th scope="col">   </th>-->
                                         </tr>
                                     </thead>
                                     <tbody id="branchtable">
@@ -92,81 +95,192 @@
         </section>
 
                                    
-                                    <?php
-                        // Datababse connection parameters
-                        $servername = "localhost";
-                        $username = "root";
-                        $password = "";
-                        $dbname = "semi_conductor_management_system";
+        <?php
+            // Datababse connection parameters
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "semi_conductor_management_system";
 
-                        // create a connection 
-                        $conn = new mysqli($servername,$username,$password,$dbname);
+            // create a connection
+            $conn = new mysqli($servername,$username,$password,$dbname);
 
-                        // check connection
-                        if ($conn->connect_error) {
-                            //stop executing the code and echo error
-                            die("Connection failed: " . $conn->connect_error);
-                        } 
+            // check connection
+            if ($conn->connect_error) {
+                //stop executing the code and echo error
+                die("Connection failed: " . $conn->connect_error);
+            }
 
-                        // Create a PDO object to connect to the database
-                        try {
-                            $pdo = new PDO("mysql:host=localhost;dbname=$dbname", $username, $password);
-                            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                        } catch (PDOException $e) {
-                            echo "Database connection failed: " . $e->getMessage();
-                        }
+            // Create a PDO object to connect to the database
+            try {
+                $pdo = new PDO("mysql:host=localhost;dbname=$dbname", $username, $password);
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                echo "Database connection failed: " . $e->getMessage();
+            }
 
-                        // Number of records to display per page
-                        $records_per_page = 100;
+            // Number of records to display per page
+            $records_per_page = 100;
 
-                        // Get the total number of records in the table
-                        $sql = "SELECT COUNT(*) AS count FROM Integrators";
-                        $stmt = $pdo->prepare($sql);
-                        $stmt->execute();
-                        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                        $total_records = $result['count'];
+            // Get the total number of records in the table
+            $sql = "SELECT COUNT(*) AS count FROM Integrators";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $total_records = $result['count'];
 
-                        // Calculate the total number of pages
-                        $total_pages = ceil($total_records / $records_per_page);
+            // Calculate the total number of pages
+            $total_pages = ceil($total_records / $records_per_page);
 
-                        // Get the current page number
-                        if (isset($_GET['page'])) {
-                            $current_page = $_GET['page'];
-                        } else {
-                            $current_page = 1;
-                        }
+            // Get the current page number
+            if (isset($_GET['page'])) {
+                $current_page = $_GET['page'];
+            } else {
+                $current_page = 1;
+            }
 
-                        // Calculate the offset for the SQL query
-                        $offset = ($current_page - 1) * $records_per_page;
+            // Calculate the offset for the SQL query
+            $offset = ($current_page - 1) * $records_per_page;
 
-                        // Retrieve the records for the current page
-                        $sql = "SELECT Branch_ID,Branch_Name, Location_ID FROM Branch LIMIT $offset, $records_per_page";
-                        $stmt = $pdo->prepare($sql);
-                        $stmt->execute();
-                        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            // Retrieve the records for the current page
+            $sql = "SELECT Branch_ID,Branch_Name, Location_ID FROM Branch LIMIT $offset, $records_per_page";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                        // create the HTML for the table rows
-                        $tableBody = "";
-                        foreach ($results as $row) {
-                            $tableBody .= "<tr>";
-                            $tableBody .= "<td>" . $row['Branch_ID'] . "</td>";
-                            $tableBody .= "<td>" . $row['Branch_Name'] . "</td>";
-                            $tableBody .= "<td>" . $row['Location_ID'] . "</td>";
-                            
-                        
-                        }
-                    ?>
+            // create the HTML for the table rows
+            $tableBody = "";
+            foreach ($results as $row) {
+                $tableBody .= "<tr>";
+                $tableBody .= "<td>" . $row['Branch_ID'] . "</td>";
+                $tableBody .= "<td>" . $row['Branch_Name'] . "</td>";
+                $tableBody .= "<td>" . $row['Location_ID'] . "</td>";
+                $tableBody .= "<td align='right'><button type='button' class='btn btn-danger' onclick='confirmdelete(this.id)' id='$row[Branch_ID]'><i class='bi bi-exclamation-octagon'></i></button>  \
+ <button type='button' class='btn btn-info' onclick='showUpdateModal()' id='$row[Branch_ID]'><i class='bi bi-info-circle'></i></button></td>";
+                
+            }
+
+
+        ?>
+
+        <!-- Vertically centered Modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
+            Vertically centered
+        </button>
+        <div class="modal fade" id="verticalycentered" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Update Branch</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="row g-3" id="branchform">
+                            <div class="col-12"><label class="form-label form-label" for="inputNanme4">Branch ID</label><input class="form-control form-control" type="text" id="branchid"></div>
+                            <div class="col-12"><label class="form-label form-label" for="inputNanme4">&nbsp;Branch Name</label><input class="form-control form-control" type="text" id="branchname"></div>
+                            <!--                                <div class="col-12"><label class="form-label form-label" for="inputNanme4">Location ID</label><input class="form-control form-control" type="text" id="locationid"></div>-->
+                            <div  class="col-12">
+                                <label class="form-label form-label" for="inputNanme4">Location ID</label>
+                                <?php
+
+                                // query the database for options
+                                $sql = "SELECT Location_ID FROM location";
+                                $result = $conn->query($sql);
+
+                                // create dropdown list
+                                echo "<select name='options' class='form-control' id='locationid''>";
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<option  value='".$row["Location_ID"]."'>".$row["Location_ID"]."</option>";
+                                    }
+                                } else {
+                                    echo "<option value=''>No options available</option>";
+                                }
+                                echo "</select>";
+
+                                // close database connection
+                                $conn->close();
+                                ?>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End Vertically centered Modal-->
+        
+        
 
 <script>
     // set the innerHTML of the table body to the tableBody variable
-document.getElementById("branchtable").innerHTML = "<?php echo $tableBody?>";;
+document.getElementById("branchtable").innerHTML = "<?php echo $tableBody?>";
+    
+function showUpdateModal() {
+        $('#verticalycentered').modal('show');
+    }
+
+// delete functiion
+function confirmdelete(buttonId) {
+    const confirmation = confirm("Are you sure you want to delete the record?");
+    if (confirmation === true) {
+        var data = {
+            deleteid: buttonId,
+            deletebranch: true
+        };
+        
+        $.ajax({
+            url: "delete.php",
+            type: "GET",
+            data: data,
+            success: function(response) {
+                // console.log('Request successfully sent to server!');
+                console.log(response)
+                // console.log(response);
+                // alert("Record was added successfully!");
+            },
+            error: function(xhr, status, error) {
+                console.log('Request failed!');
+                console.log(status);
+                console.log(error);
+
+            }
+        });
+
+    } else {
+        console.log("Request failed")
+    }
+    
+    //reload current page
+    location.reload();
+}
 
 
 </script>
+        <!-- Vertically centered Modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
+            Vertically centered
+        </button>
+        <div class="modal fade" id="verticalycentered" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Vertically Centered</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Non omnis incidunt qui sed occaecati magni asperiores est mollitia. Soluta at et reprehenderit. Placeat autem numquam et fuga numquam. Tempora in facere consequatur sit dolor ipsum. Consequatur nemo amet incidunt est facilis. Dolorem neque recusandae quo sit molestias sint dignissimos.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End Vertically centered Modal-->
     </main>
     <footer id="footer" class="footer">
-        <div class="copyright"><span> © Copyright </span><strong><span>NiceAdmin</span></strong><span>. All Rights Reserved </span></div>
-        <div class="credits"><span> Designed by </span><a href="https://bootstrapmade.com/">BootstrapMade</a></div>
+       
     </footer><a class="d-flex justify-content-center align-items-center back-to-top" href="#"><i class="bi bi-arrow-up-short"></i></a>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/vendor/apexcharts/apexcharts.min.js"></script>

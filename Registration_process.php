@@ -19,9 +19,9 @@ if (isset($_GET['register']))
 	$servername = "localhost";
 	$username = "root";
 	$password = "";
-	$dbname = "Silicorp_Users";
+  	$dbname = "semi_conductor_management_system";
 
-	$expression = '/^[A-Za-z]+(\.[A-Za-z]+)?@amd\.cm$/';
+	// $expression = '/^[A-Za-z]+(\.[A-Za-z]+)?@amd\.cm$/';
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
@@ -51,7 +51,7 @@ if (isset($_GET['register']))
     
     
 	if ($count === 0) {
-	    if (preg_match($expression, $user_email)) {
+	    // if (preg_match($expression, $user_email)) {
 	        //write query
 	        $query = "INSERT INTO users (FName, LName, User_name, User_password, User_role)
 	                  VALUES ('$user_fname', '$user_lname', '$user_email', '$encrypted_pass', '1')";
@@ -64,12 +64,12 @@ if (isset($_GET['register']))
 	        header("Location: pages-login.php");
 	        exit();
 	    }
-		else{
-    		$_SESSION['email_error']  = $email_error;
-    		header('Location: pages-registration.php');
-    		exit();
-    	}
-	}
+		// else{
+    	// 	$_SESSION['email_error']  = $email_error;
+    	// 	header('Location: pages-registration.php');
+    	// 	exit();
+    	// }
+	// }
     	
     else{
 		$_SESSION['duplicate'] = $duplicate_error;

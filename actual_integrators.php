@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="assets/css/vendor/remixicon/remixicon.css">
     <link rel="stylesheet" href="assets/css/vendor/simple-datatables/style.css">
     <link rel="stylesheet" href="assets/css/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -120,7 +121,7 @@
     $records_per_page = 10;
 
     // Get the total number of records in the table
-    $sql = "SELECT COUNT(*) AS count FROM employee";
+    $sql = "SELECT COUNT(*) AS count FROM Integrators";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -154,6 +155,8 @@
         $tableBody .= "<td>" . $row['Location_ID'] . "</td>";
         $tableBody .= "<td>" . $row['Email'] . "</td>";
         $tableBody .= "<td>" . $row['Telephone'] . "</td>";
+        $tableBody .= "<td align='right'><button type='button' class='btn btn-danger' onclick='confirmdelete(this.id)' id='$row[Integrator_ID]'><i class='bi bi-exclamation-octagon'></i></button>  \
+ <button type='button' class='btn btn-info' onclick='showUpdateModal()' id='$row[Integrator_ID]'><i class='bi bi-info-circle'></i></button></td>";
         
     }
 ?>
@@ -161,6 +164,44 @@
 <script>
     // set the innerHTML of the table body to the tableBody variable
     document.getElementById("integratorstable").innerHTML = "<?php echo $tableBody?>";
+
+    function showUpdateModal() {
+    $('#verticalycentered').modal('show');
+}
+    // delete functiion
+function confirmdelete(buttonId) {
+    const confirmation = confirm("Are you sure you want to delete the record?");
+    if (confirmation === true) {
+        var data = {
+            deleteid: buttonId,
+            deleteint: true
+        };
+        
+        $.ajax({
+            url: "delete.php",
+            type: "GET",
+            data: data,
+            success: function(response) {
+                // console.log('Request successfully sent to server!');
+                console.log(response)
+                // console.log(response);
+                // alert("Record was added successfully!");
+            },
+            error: function(xhr, status, error) {
+                console.log('Request failed!');
+                console.log(status);
+                console.log(error);
+
+            }
+        });
+
+    } else {
+        console.log("Request failed")
+    }
+    
+    //reload current page
+    location.reload();
+}
 
 </script>
     </main>

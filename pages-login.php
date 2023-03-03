@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Pages / Login </title>
+    <title>Pages / Login - NiceAdmin Bootstrap Template</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i">
     <link rel="stylesheet" href="assets/css/bootstrap-icons.css">
@@ -39,6 +39,7 @@
                                         <p class="text-center small">Please enter your username &amp; password to login</p>
                                     </div>
                                     <form class="row g-3 needs-validation" action = "login_process.php" method="POST">
+                                        <!--  -->
                                         <div class="col-12"><label class="form-label form-label" for="username">Username</label>
                                             <div class="input-group has-validation"><span class="input-group-text input-group-text" id="inputGroupPrepend">@</span><input class="form-control form-control" type="text" name="username" id="username" required="">
                                                 <div class="input-group-text invalid-feedback"><span>Please enter your username.</span></div>
@@ -50,10 +51,10 @@
                                        <!--  <div class="col-12">
                                             <div class="form-check"><input type="checkbox" class="form-check-input" name="remember" value="true" id="rememberMe"><label class="form-label form-check-label" for="rememberMe">Remember me</label></div>
                                         </div> -->
-                                        <input type="submit" name="login-pages" value="Login" onclick = "login();">
+                                        <input type="submit" name="login-pages" value="Login" onclick = "login()">
                                         <?php
                                             if(isset($_SESSION['error'])) {
-                                                echo "<p>" . $_SESSION['error'] . "</p>";
+                                                echo '<p style="color:red">' . $_SESSION['error'] . '</p>';
                                                 unset($_SESSION['error']);
                                             }
                                         ?>
@@ -61,9 +62,6 @@
                                       <!--   <div class="col-12"><a href="index.html">
                                             <p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
                                         </div> -->
-                                    <div class="col-12">
-                                  <p class="small mb-0">Need an account? <a href="pages-registration.php">Sign Up</a></p>
-                                </div>
                                     </form>
                                 </div>
                             </div>
@@ -86,7 +84,7 @@
     <script src="assets/js/js/main.js"></script>
 </body>
 <script type="text/javascript">
-    
+
 function login(){
 
 if(validationLogin()){

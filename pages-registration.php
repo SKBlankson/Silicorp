@@ -8,7 +8,7 @@ session_start();
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Pages / Register </title>
+  <title>Pages / Register - NiceAdmin Bootstrap Template</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -53,7 +53,7 @@ session_start();
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
                   <img src="assets/img/logo.png" alt="">
-                  <span class="d-none d-lg-block"></span>
+                  <span class="d-none d-lg-block">NiceAdmin</span>
                 </a>
               </div><!-- End Logo -->
 
@@ -105,7 +105,7 @@ session_start();
                     </div>
                     <?php
                         if(isset($_SESSION['email_error'])) {
-                            echo "<p>" . $_SESSION['email_error'] . "</p>";
+                            echo '<p style="color:red">' . $_SESSION['email_error'] . '</p>';
                             unset($_SESSION['email_error']);
                         }
                     ?>
@@ -124,11 +124,12 @@ session_start();
                       </div>
                     </div>
                     <?php
+                        
                         if(isset($_SESSION['duplicate'])) {
-                          echo "<p>" . $_SESSION['duplicate'] . "</p>";
-                          unset($_SESSION['duplicate']);
-                                      }
-                                        ?>
+                             echo '<p style="color:red">' . $_SESSION['duplicate'] . '</p>';
+                             unset($_SESSION['duplicate']);
+                                  }
+                                         ?> 
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit" name = "register" id = "register" onclick = "registration();">Create Account
                       </button>
@@ -168,78 +169,53 @@ session_start();
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   <script type="text/javascript">
+
+    
     function registration(){
 
-if(validationreg()){
-        $.ajax({
-                url: "Registration_process.php", 
-                type: "GET",
-                data: {"username": User_name, 
-                       "password": User_password 
-                       },
-                dataType: "html",
-                cache: false,
-                beforeSend: function() {    
-                    console.log("Processing...");
-                },
-                success: 
-                      function(data){
-                        if(data == "OK"){
-                            return 0 ;
-                        }else{
-                            return 0;
-                        }
-                    }
+      // var username = document.getElementById('username').value;
+      // var password = document.getElementById('password').value;
 
-        });
+      var fname = $('#user_fname').val();
+      var lname = $('#user_lname').val();
+      var username = $('#user_email').val();
+      var pass = $('#password').val();
+      var data = {
+        formid: formname,
+        branchid: branchid,
+        branchname: branchname,
+        locationid: locationid
+      };
 
-    }else{
-        //alert("Incorrect data");
-    }
+      console.log(data);
+      if(validationreg()){
+              $.ajax({
+                      url: "Registration_process.php", 
+                      type: "GET",
+                      data: data,
+                      dataType: "html",
+                      cache: false,
+                      beforeSend: function() {    
+                          console.log("Processing...");
+                      },
+                      success: 
+                            function(data){
+                              if(data == "OK"){
+                                  return 0 ;
+                              }else{
+                                  return 0;
+                              }
+                          }
+
+              });
+
+          }else{
+              //alert("Incorrect data");
+          }
 }
 
   </script>
-  <!-- <script type="text/javascript">
-    $(document).on('click','register',function(e){
-      e.preventDefault();
 
-      var fname = document.getElementById('fname').value;
-      var lname = document.getElementById('lname').value;
-      var email = document.getElementById('email').value;
-      var password = document.getElementById('password').value;
-      var regbutton = document.getElementById('register');
-
-      // var expression = ;
-
-     
-      //call the post method
-      // loadDoc(uname, upass, regbutton);
-    }
-      else{
-      $.ajax({
-        url: 'Registration_process.php';
-        type: 'GET';
-        data:{
-          fname:fname,
-          lname:lname,
-          email:email,
-          password:password
-        }
-        success: function(response){
-              loadDoc(fname,)
-              alert('success')
-            },
-          }
-        failure: function (response) {
-                alert('failure');
-            }
-        });
-      
-    
-
-    
-
-  </script> -->
 
 
 

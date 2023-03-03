@@ -1,5 +1,7 @@
 <?php
-if (isset($_POST['formid'])) {
+if (isset($_POST['formid'])) 
+{
+	echo 'i am in phase 1';
 
   //database connection parameters
   $servername = "localhost";
@@ -12,6 +14,7 @@ if (isset($_POST['formid'])) {
   // Check connection
   if ($conn->connect_error) {
     //stop executing the code and echo error
+    echo "connection failed";
     die("Connection failed: " . $conn->connect_error);
   }
 
@@ -21,12 +24,14 @@ if (isset($_POST['formid'])) {
     $branch_id = $_POST['branchid'];
     $branch_name = $_POST['branchname'];
     $locationid = $_POST['locationid'];
+    echo 'passed phase 1';
 
     //check for existing branch id
     $sql_search = "SELECT * FROM Branch WHERE Branch_ID = '$branch_id'";
     $result = mysqli_query($conn, $sql_search);  
     $count = mysqli_num_rows($result);
 
+    echo "<script>alert('about to insert')</script>";
     //if count is zero, insert into the database
     if ($count === 0) {
       $query = "INSERT INTO Branch (Branch_ID, Branch_Name, Location_ID)
