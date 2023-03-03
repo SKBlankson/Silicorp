@@ -204,7 +204,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" onclick="confirmupdate()" class="btn btn-primary" id="updateconfirmed">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -215,26 +215,76 @@
 <script>
     // set the innerHTML of the table body to the tableBody variable
 document.getElementById("branchtable").innerHTML = "<?php echo $tableBody?>";
-    
-function showUpdateModal(buttonId) {
-    var locid = buttonId;
 
-<?php
-        $server = new mysqli("localhost","root","","semi_conductor_management_system");
-        $sqlquery = "SELECT FROM branch WHERE Branch_ID = 'locid'";
-//        // Step 3: Execute the SQL query
-//        $result = mysqli_query($conn, $sqlquery);
-//
-//        // Step 4: Retrieve the data and set it as the value of the form input field
-//        if (mysqli_num_rows($result) == 1) {
-//            $querydata = mysqli_fetch_assoc($result);
-//            $Location = $querydata["Location_ID"];
-//        }
-////         ?>
-       $('#verticalycentered').modal('show');
-        
+
+function showUpdateModal(buttonId) {
+    $.ajax({
+        type: "POST",
+        url: "update.php",
+        data: {
+            updatebranch: true,
+            updateid: buttonId
+        },
+        dataType: "json",
+        success: function(data) {
+            // Handle the JSON response
+            console.log(data.branchid_sent);
+            console.log(data.branchname_sent);
+            console.log(data.locationid_sent);
+            
+            // these variables are returned frm the server
+            $('#branchid').val(data.branchid_sent);
+            $('#branchname').val(data.branchname_sent);
+            $('#locationid').val(data.locationid_sent);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // Handle any errors
+            console.error("Error retrieving JSON data: " + textStatus + ", " + errorThrown);
+        }
+    });
+    // show the pop up
+    $('#verticalycentered').modal('show');
+    //
+    //get updpate button and other fields
+
     }
 
+function confirmupdate(){
+    var updatebutton = document.getElementById("updateconfirmed");
+    var newbranchid = document.getElementById("branchid").value;
+    var newbranchname = document.getElementById("branchname").value;
+    var newlocation = document.getElementById("locationid").value
+    var data = {
+        updatebranch: true,
+        pushupdate: true,
+        newbranchid: newbranchid,
+        newbranchname: newbranchname,
+        newlocation: newlocation
+    };
+
+    // Add an event listener to the button
+    // updatebutton.addEventListener("click", function() {
+
+        //send request back to server to perform update
+        $.ajax({
+            type: "POST",
+            url: "update.php",
+            data: $.param(data)
+        });
+    //reload current page
+    // alert("changes saved!")
+    $('#verticalycentered').modal('hide');
+    // alert("changes saved!")
+    //reload current page
+    location.reload();
+    
+    
+        
+
+
+    // }
+}
+    
 // delete functiion
 function confirmdelete(buttonId) {
     const confirmation = confirm("Are you sure you want to delete the record?");
@@ -249,7 +299,6 @@ function confirmdelete(buttonId) {
             type: "GET",
             data: data,
             success: function(response) {
-                // console.log('Request successfully sent to server!');
                 console.log(response)
                 // console.log(response);
                 // alert("Record was added successfully!");
@@ -258,7 +307,6 @@ function confirmdelete(buttonId) {
                 console.log('Request failed!');
                 console.log(status);
                 console.log(error);
-
             }
         });
 
@@ -269,6 +317,7 @@ function confirmdelete(buttonId) {
     //reload current page
     location.reload();
 }
+
 
 
 </script>
