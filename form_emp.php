@@ -73,9 +73,10 @@
                                 <div class="col-12"><label class="form-label form-label" for="inputNanme4">Last Name</label><input class="form-control form-control" type="text" id="inputNanme-2"></div>
                                 <div class="col-12"><label class="form-label form-label" for="inputNanme4">Date of Birth</label><input class="form-control form-control" type="date"></div>
                                 <div class="col-12"><label class="form-label form-label" for="inputEmail4">Gender</label>
-                                    <div class="form-check"><input type="radio" class="form-check-input" name="gridRadios" id="gridRadios1" value="option1" checked=""><label class="form-label form-check-label" for="gridRadios1"> Male</label></div>
-                                    <div class="form-check"><input type="radio" class="form-check-input" name="gridRadios" id="gridRadios2" value="option2"><label class="form-label form-check-label" for="gridRadios2"> Female</label></div>
-                                    <div class="form-check disabled"><input type="radio" class="form-check-input" name="gridRadios" id="gridRadios" value="option" disabled=""><label class="form-label form-check-label" for="gridRadios3"> Other</label></div>
+                                    <select class="form-control">
+                                        <option value="1">1</option>
+                                        <option value="0">0</option>
+                                    </select>
                                 </div>
                                 <div class="col-12"><label class="form-label form-label" for="inputAddress">Address</label><input class="form-control form-control" type="text" id="inputAddress-1" placeholder="1234 Main St"></div>
                                 <div class="col-12"><label class="form-label form-label" for="inputNanme4">Company Email</label><input class="form-control form-control" type="text" id="inputNanme-3"></div>
@@ -93,8 +94,7 @@
         </section>
     </main>
     <footer id="footer" class="footer">
-        <div class="copyright"><span> © Copyright </span><strong><span>NiceAdmin</span></strong><span>. All Rights Reserved </span></div>
-        <div class="credits"><span> Designed by </span><a href="https://bootstrapmade.com/">BootstrapMade</a></div>
+        
     </footer><a class="d-flex justify-content-center align-items-center back-to-top" href="#"><i class="bi bi-arrow-up-short"></i></a>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/vendor/apexcharts/apexcharts.min.js"></script>

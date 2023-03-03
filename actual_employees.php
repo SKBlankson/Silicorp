@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="assets/css/vendor/remixicon/remixicon.css">
     <link rel="stylesheet" href="assets/css/vendor/simple-datatables/style.css">
     <link rel="stylesheet" href="assets/css/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -67,7 +68,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Employees</h5>
-                            <div style="display: flex;justify-content: space-between;padding-bottom: 15pxs;"><button class="btn btn-success" type="button" style="margin-right: -1px;">+Add Record</button><button class="btn btn-primary" type="button" align="right" style="margin-right: 0px;margin-left: 0px;">Display Graph</button></div>
+                            <div style="display: flex;justify-content: space-between;padding-bottom: 15pxs;"><button class="btn btn-success" type="button" style="margin-right: -1px;"><a href="form_emp.php" style="color: white">+Add Record</a></button><button class="btn btn-primary" type="button" align="right" style="margin-right: 0px;margin-left: 0px;">Display Graph</button></div>
                             <div>
                                 <table class="table table-striped" >
                                     <thead>
@@ -81,6 +82,7 @@
                                             <!-- <th scope="col">Personal Email</th> -->
                                             <th scope="col">Dept_Code</th>
                                             <th scope="col">Date of Employment</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody id="employeetable">
@@ -163,13 +165,182 @@
         // $tableBody .= "<td>" . $row['Personal_Email'] . "</td>";
         $tableBody .= "<td>" . $row['Dept_Code'] . "</td>";
         $tableBody .= "<td>" . $row['Date_of_Employment'] . "</td>";
+        $tableBody .= "<td align='right'><button type='button' class='btn btn-danger' onclick='confirmdelete(this.id)' id='$row[Employee_ID]'><i class='bi bi-exclamation-octagon'></i></button> <button type='button' class='btn btn-info' onclick='showUpdateModal(this.id)' id='$row[Employee_ID]'><i class='bi bi-info-circle'></i></button></td>";
         $tableBody .= "</tr>";
     }
 ?>
 
+        <!--        pop up for updating-->
+        <!-- Vertically centered Modal -->
+        <div class="modal fade" id="verticalycentered2" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Update Branch</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="row g-3">
+                            <div class="col-12"><label class="form-label form-label" for="inputNanme4">Employee ID</label><input class="form-control form-control" type="text" id="inputNanme-1"></div>
+                            <div class="col-12"><label class="form-label form-label" for="inputNanme4">First Name</label><input class="form-control form-control" type="text" id="inputNanme-9"></div>
+                            <div class="col-12"><label class="form-label form-label" for="inputNanme4">Last Name</label><input class="form-control form-control" type="text" id="inputNanme-2"></div>
+                            <div class="col-12"><label class="form-label form-label" for="inputNanme4">Date of Birth</label><input class="form-control form-control" type="date" id="dobin"></div>
+                            <div class="col-12"><label class="form-label form-label" for="inputEmail4">Gender</label>
+                                <select class="form-control" id="genderin">
+                                    <option value="1">1</option>
+                                    <option value="0">0</option>
+                                </select>
+                            </div>
+                           
+                            <div class="col-12"><label class="form-label form-label" for="inputNanme4">Company Email</label><input class="form-control form-control" type="text" id="inputNanme-3"></div>
+<!--                            <div class="col-12"><label class="form-label form-label" for="inputNanme4">Personal Email</label><input class="form-control form-control" type="text" id="inputNanme-4"></div>-->
+                            <div class="col-12"><label class="form-label form-label" for="inputNanme4">Department Code</label><input class="form-control form-control" type="text" id="inputNanme-5"></div>
+                            <div class="col-12"><label class="form-label form-label" for="inputNanme4">Date of Employment</label><input class="form-control form-control" type="date" id="doein"></div>
+                            
+                        </form>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" onclick="confirmupdate()" class="btn btn-primary" id="updateconfirmed">Save changes</button>
+                            </div>
+                    </div>
+                </div>
+            </div><!-- End Vertically centered Modal-->
+
+
 <script>
     // set the innerHTML of the table body to the tableBody variable
-    document.getElementById("employeetable").innerHTML = "<?php echo $tableBody?>";
+document.getElementById("employeetable").innerHTML = "<?php echo $tableBody?>";
+
+    function showUpdateModal(buttonId) {
+        $.ajax({
+            type: "POST",
+            url: "update.php",
+            data: {
+                updateemp: true,
+                updateid: buttonId
+            },
+            dataType: "json",
+            success: function(data) {
+                // Handle the JSON response
+                console.log(data.empid_sent);
+                console.log(data.empfname_sent);
+                console.log(data.emplname_sent);
+                console.log(data.empgender_sent);
+                console.log(data.empdob_sent);
+                console.log(data.empemail_sent);
+                console.log(data.empdeptcode_sent);
+                console.log(data.empdoe_sent);
+
+                // these variables are returned frm the server
+                $('#inputNanme-1').val(data.empid_sent);
+                $('#inputNanme-9').val(data.empfname_sent);
+                $('#inputNanme-2').val(data.emplname_sent);
+                $('#genderin').val(data.empgender_sent);
+                $('#dobin').val(data.empdob_sent);
+                $('#inputNanme-3').val(data.empemail_sent);
+                $('#inputNanme-5').val(data.empdeptcode_sent);
+                $('#doein').val(data.empdoe_sent);
+                
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Handle any errors
+                console.error("Error retrieving JSON data: " + textStatus + ", " + errorThrown);
+            }
+        });
+        // show the pop up
+        $('#verticalycentered2').modal('show');
+        //
+        //get updpate button and other fields
+
+    }
+
+    function confirmupdate(){
+        var updatebutton = document.getElementById("updateconfirmed");
+        var newempid = document.getElementById("inputNanme-1").value;
+        var newempfname = document.getElementById("inputNanme-9").value;
+        var newemplname = document.getElementById("inputNanme-2").value;
+        var newempgender = document.getElementById("genderin").value;
+        var newempdob = document.getElementById("dobin").value;
+        var newempmail = document.getElementById("inputNanme-3").value;
+        var newempdeptcode = document.getElementById("inputNanme-5").value;
+        var newempdoe = document.getElementById("doein").value;
+        
+        
+        var data = {
+            updateemp: true,
+            pushupdate: true,
+            // updatebutton : updateconfirmed,
+            newempid : newempid,
+            newempfname : newempfname,
+            newemplname : newemplname,
+            newempgender : newempgender,
+            newempdob : newempdob,
+            newempmail : newempmail,
+            newempdeptcode : newempdeptcode,
+            newempdoe : newempdoe
+
+        };
+
+       
+
+        //send request back to server to perform update
+        $.ajax({
+            type: "POST",
+            url: "update.php",
+            data: $.param(data)
+        });
+        //reload current page
+        // alert("changes saved!")
+        $('#verticalycentered').modal('hide');
+        // alert("changes saved!")
+        //reload current page
+        // location.reload();
+
+
+
+
+
+        // }
+    }
+
+    // delete functiion
+    function confirmdelete(buttonId) {
+        const confirmation = confirm("Are you sure you want to delete the record?");
+        if (confirmation === true) {
+            var data = {
+                deleteid: buttonId,
+                deleteemp: true
+            };
+
+            $.ajax({
+                url: "delete.php",
+                type: "GET",
+                data: data,
+                success: function(response) {
+                    console.log(response)
+                    // console.log(response);
+                    // alert("Record was added successfully!");
+                },
+                error: function(xhr, status, error) {
+                    console.log('Request failed!');
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+
+        } else {
+            console.log("Request failed")
+        }
+
+        //reload current page
+        location.reload();
+    }
+
+
+
 
 </script>
     </main>
