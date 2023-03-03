@@ -30,7 +30,7 @@
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-md-6 col-lg-4 d-flex flex-column justify-content-center align-items-center">
-                            <div class="d-flex justify-content-center py-4"><a class="d-flex align-items-center logo w-auto" href="index.html"></a></div><img src="assets/img/LOGO.png" width="230" height="40">
+                            <div class="d-flex justify-content-center py-4"><a class="d-flex align-items-center logo w-auto" href="index.html"></a></div><img src="LOGO.png" width="230" height="40">
                             <br>
                             <div class="card mb-3">
                                 <div class="card-body">

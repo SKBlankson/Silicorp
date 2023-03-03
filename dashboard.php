@@ -38,13 +38,176 @@
 </head>
 
 <body>
+<<?php
+    // Datababse connection parameters
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "semi_conductor_management_system";
 
+    // create a connection 
+    $conn = new mysqli($servername,$username,$password,$dbname);
+
+    // check connection
+    if ($conn->connect_error) {
+        //stop executing the code and echo error
+        die("Connection failed: " . $conn->connect_error);
+    } 
+
+    // Create a PDO object to connect to the database
+    try {
+        $pdo = new PDO("mysql:host=localhost;dbname=$dbname", $username, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        echo "Database connection failed: " . $e->getMessage();
+    }
+
+
+    // Get the total number of Employee records in the database
+    $sql = "SELECT COUNT(*) AS count FROM Employee";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_employees=$result["count"];
+
+    // Get the total number of fulltime employee records in the database
+    $sql = "SELECT COUNT(*) AS count FROM fulltime";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_fullemployees=$result["count"];
+
+    // Get the total number of part time employee records in the database
+    $sql = "SELECT COUNT(*) AS count FROM parttime";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_partemployees=$result["count"];
+
+    // Get the total number of intern records in the database
+    $sql = "SELECT COUNT(*) AS count FROM intern";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_intern=$result["count"];
+
+    // Get the total number of branches in the database
+    $sql = "SELECT COUNT(*) AS count FROM Branch";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_branches=$result["count"];
+
+    
+    // Get the total number of locations in the database
+    $sql = "SELECT COUNT(*) AS count FROM location";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_locations=$result["count"];
+
+    // Get the total number of Storefront partners in the database
+    $sql = "SELECT COUNT(*) AS count FROM Storefront_Partners";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_storefronts=$result["count"];
+
+    // Get the total number of CPU Storefront partners in the database
+    $sql = "SELECT COUNT(*) AS count FROM CPU_Storefront_Partners";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_cpustorefronts=$result["count"];
+
+    // Get the total number of GPU Storefront partners in the database
+    $sql = "SELECT COUNT(*) AS count FROM GPU_Storefront_Partners";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_gpustorefronts=$result["count"];
+
+    // Get the total number of fabricator partners in the database
+    $sql = "SELECT COUNT(*) AS count FROM Fabricator_Partners";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_fabricators=$result["count"];
+
+    // Get the total number of cpu fabricator partners in the database
+    $sql = "SELECT COUNT(*) AS count FROM CPU_FabricatorPartners";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_cpufabricators=$result["count"];
+
+    // Get the total number of gpu fabricator partners in the database
+    $sql = "SELECT COUNT(*) AS count FROM GPU_FabricatorPartners";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_gpufabricators=$result["count"];
+
+    // Get the total number of fintegrators in the database
+    $sql = "SELECT COUNT(*) AS count FROM Integrators";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_integrator=$result["count"];
+
+    // Get the total number of cpu integrator partners in the database
+    $sql = "SELECT COUNT(*) AS count FROM CPU_Integrators";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_cpuintegrator=$result["count"];
+
+    // Get the total number of gpu integrator partners in the database
+    $sql = "SELECT COUNT(*) AS count FROM GPU_Integrators";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_gpuintegrator=$result["count"];
+
+    // Get the total number of R&D projects in the database
+    $sql = "SELECT COUNT(*) AS count FROM RD_Projects";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_rdprojects=$result["count"];
+
+    // Get the total number of released R&D projects in the database
+    $sql = "SELECT COUNT(*) AS count FROM RD_Projects where Release_Status = 1 ";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_activerdprojects=$result["count"];
+
+    // Get the total number of unreleased R&D projects in the database
+    $sql = "SELECT COUNT(*) AS count FROM RD_Projects where Release_Status = 0";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_pendingrdprojects=$result["count"];
+
+    // Get the next date of the next R&D project in the database
+    $sql = "SELECT MAX(Launch_date) AS largest_date FROM RD_Projects;";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $nextgrdproject=$result["largest_date"];
+
+    
+
+
+
+?>
 
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="dashboard.html" class="logo d-flex align-items-center">
+      <a href="dashboard.php" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -165,7 +328,7 @@
 
         <li class="nav-item dropdown pe-3">
 
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="" data-bs-toggle="dropdown">
             <img src="assets/img/IMG_3222.jpg" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">H. Wood</span>
           </a><!-- End Profile Iamge Icon -->
@@ -183,16 +346,6 @@
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                <i class="bi bi-gear"></i>
-                <span>Account Settings</span>
               </a>
             </li>
             <li>
@@ -227,17 +380,77 @@
   <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
         <ul class="sidebar-nav" id="sidebar-nav">
-            <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-grid"></i><span>Dashboard</span></a></li>
-            <li class="nav-item"><a class="nav-link collapsed" href="tables-general.html"><i class="bi bi-card-list"></i><span>Data Repository</span></a></li>
-            <li class="nav-item"><a class="nav-link" data-bs-target="#forms-nav"  href="forms-layouts.html"><i class="bi bi-journal-text"></i><span>Forms</span></a></li>
-        </ul>
+            <li class="nav-item">
+                <a class="nav-link" href="dashboard.php"><i class="bi bi-grid"></i><span>Dashboard</span></a></li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#Data_Repository-nav" data-bs-toggle="collapse" href="tables-general.php"><i class="bi bi-card-list"></i><span>Data Repository</span>
+                </a>
+                <ul id="Data_Repository-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+              <a href="actual_employees.php">
+              <i class="bi bi-circle"></i><span>Employees</span>
+            </a>
+          </li>
+          <li>
+            <a href="actual_branch.php">
+              <i class="bi bi-circle"></i><span>Branch</span>
+            </a>
+          </li>
+          <li>
+            <a href="actual_fabricators.php">
+              <i class="bi bi-circle"></i><span>Fabricators</span>
+            </a>
+          </li>
+          <li>
+            <a href="actual_integrators.php">
+              <i class="bi bi-circle"></i><span>Integrators</span>
+            </a>
+          </li>
+          <li>
+            <a href="actual_storefronts.php">
+              <i class="bi bi-circle"></i><span>Store-front partners</span>
+            </a>
+          </li>
+      </ul>
+
+      <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href='#'><i class="bi bi-journal-text"></i><span>Forms</span>
+                </a>
+                <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+              <a href="form_emp.php">
+              <i class="bi bi-circle"></i><span>Employees</span>
+            </a>
+          </li>
+          <li>
+            <a href="form_branch.php">
+              <i class="bi bi-circle"></i><span>Branch</span>
+            </a>
+          </li>
+          <li>
+            <a href="form_fab.php">
+              <i class="bi bi-circle"></i><span>Fabricators</span>
+            </a>
+          </li>
+          <li>
+            <a href="form_int.php">
+              <i class="bi bi-circle"></i><span>Integrators</span>
+            </a>
+          </li>
+          <li>
+            <a href="form_sfp.html">
+              <i class="bi bi-circle"></i><span>Store-front partners</span>
+            </a>
+          </li>
+      </ul>
     </aside>
+    <!-- End Sidebar-->
     <main id="main" class="main">
         <div class="pagetitle">
             <h1>Dashboard</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html"><span>Home</span></a></li>
+                    <li class="breadcrumb-item"><a href="dashboard.php"><span>Home</span></a></li>
                     <li class="breadcrumb-item active"><span>Dashboard</span></li>
                 </ol>
             </nav>
@@ -250,6 +463,7 @@
                             <div class="card"></div>
                             <div class="card">
                                 <div class="card-body">
+
                                     <h4 class="card-title">Employees</h4>
                                     <div class="table-responsive">
                                         <table class="table">
@@ -259,19 +473,19 @@
                                             <tbody>
                                                 <tr>
                                                     <td>Total</td>
-                                                    <td>5680</td>
+                                                    <td><?php echo json_encode($total_employees) ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Full Time</td>
-                                                    <td> 60%</td>
+                                                    <td> <?php echo json_encode($total_fullemployees) ?> </td>
                                                 </tr>
                                                 <tr>
                                                     <td>Part Time</td>
-                                                    <td>20%</td>
+                                                    <td><?php echo json_encode($total_partemployees) ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Interns</td>
-                                                    <td>20%</td>
+                                                    <td><?php echo json_encode($total_intern) ?></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -293,11 +507,11 @@
                                             <tbody>
                                                 <tr>
                                                     <td>Branches</td>
-                                                    <td>99</td>
+                                                    <td><?php echo json_encode($total_branches) ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Locations</td>
-                                                    <td>110</td>
+                                                    <td><?php echo json_encode($total_locations) ?></td>
                                                 </tr>
                                                 <tr></tr>
                                             </tbody>
@@ -319,15 +533,15 @@
                                             <tbody>
                                                 <tr>
                                                     <td>Total</td>
-                                                    <td>110</td>
+                                                    <td><?php echo json_encode($total_storefronts) ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>CPU Partners</td>
-                                                    <td>70</td>
+                                                    <td><?php echo json_encode($total_cpustorefronts) ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>GPU Partners</td>
-                                                    <td>40</td>
+                                                    <td><?php echo json_encode($total_gpustorefronts) ?></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -347,19 +561,15 @@
                                             <tbody>
                                                 <tr>
                                                     <td>Total</td>
-                                                    <td>50</td>
+                                                    <td><?php echo json_encode($total_fabricators) ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>CPU Fabricators&nbsp;</td>
-                                                    <td>30</td>
+                                                    <td><?php echo json_encode($total_cpufabricators) ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>GPU Fabricators</td>
-                                                    <td>20</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Average Cost</td>
-                                                    <td>$40</td>
+                                                    <td><?php echo json_encode($total_gpufabricators) ?></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -378,20 +588,16 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>Total</td>
-                                                    <td>150</td>
+                                                    <td>Total</td> 
+                                                    <td><?php echo json_encode($total_integrator) ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>CPU Integrators</td>
-                                                    <td>90</td>
+                                                    <td><?php echo json_encode($total_cpuintegrator) ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>GPU Integrators</td>
-                                                    <td>60</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Average Cost</td>
-                                                    <td>$35.60</td>
+                                                    <td><?php echo json_encode($total_gpuintegrator) ?></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -411,19 +617,19 @@
                                             <tbody>
                                                 <tr>
                                                     <td>Total</td>
-                                                    <td>37</td>
+                                                    <td><?php echo json_encode($total_rdprojects) ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Released</td>
-                                                    <td>25</td>
+                                                    <td><?php echo json_encode($total_activerdprojects) ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Unreleased</td>
-                                                    <td>12</td>
+                                                    <td><?php echo json_encode($total_pendingrdprojects) ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Next Release</td>
-                                                    <td>21/09/2023</td>
+                                                    <td><?php echo json_encode($nextgrdproject) ?></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -441,126 +647,9 @@
                                         <li><a class="dropdown-item" href="#">This Year</a></li>
                                     </ul>
                                 </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Recent Sales <span>| Today</span></h5>
-                                    <div>
-                                        <table class="table table-borderless datatable">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Customer</th>
-                                                    <th scope="col">Product</th>
-                                                    <th scope="col">Price</th>
-                                                    <th scope="col">Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td scope="row"><a href="#">#2457</a></td>
-                                                    <td>Brandon Jacob</td>
-                                                    <td><a href="#" class="text-primary">At praesentium minu</a></td>
-                                                    <td>$64</td>
-                                                    <td><span class="badge bg-success">Approved</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td scope="row"><a href="#">#2147</a></td>
-                                                    <td>Bridie Kessler</td>
-                                                    <td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
-                                                    <td>$47</td>
-                                                    <td><span class="badge bg-warning">Pending</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td scope="row"><a href="#">#2049</a></td>
-                                                    <td>Ashleigh Langosh</td>
-                                                    <td><a href="#" class="text-primary">At recusandae consectetur</a></td>
-                                                    <td>$147</td>
-                                                    <td><span class="badge bg-success">Approved</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td scope="row"><a href="#">#2644</a></td>
-                                                    <td>Angus Grady</td>
-                                                    <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-                                                    <td>$67</td>
-                                                    <td><span class="badge bg-danger">Rejected</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td scope="row"><a href="#">#2644</a></td>
-                                                    <td>Raheem Lehner</td>
-                                                    <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
-                                                    <td>$165</td>
-                                                    <td><span class="badge bg-success">Approved</span></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="card top-selling overflow-auto">
-                                <div class="filter"><a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                        <li class="text-start dropdown-header"><h6>Filter</h6></li>
-                                        <li><a class="dropdown-item" href="#">Today</a></li>
-                                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                                    </ul>
-                                </div>
-                                <div class="card-body pb-0">
-                                    <h5 class="card-title">Top Selling <span>| Today</span></h5>
-                                    <div>
-                                        <table class="table table-borderless">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Preview</th>
-                                                    <th scope="col">Product</th>
-                                                    <th scope="col">Price</th>
-                                                    <th scope="col">Sold</th>
-                                                    <th scope="col">Revenue</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td scope="row"><img src="assets/img/chips8b74c2a3d3b543d58e6a4540e6469e25.jpg" alt=""></td>
-                                                    <td><a class="fw-bold text-primary" href="#">A13 Semiconductor chip Gold series</a></td>
-                                                    <td>$64</td>
-                                                    <td class="fw-bold">124</td>
-                                                    <td>$5,828</td>
-                                                </tr>
-                                                <tr>
-                                                    <td scope="row"><img src="assets/img/product-2.jpg" alt=""></td>
-                                                    <td><a class="fw-bold text-primary" href="#">Exercitationem similique doloremque</a></td>
-                                                    <td>$46</td>
-                                                    <td class="fw-bold">98</td>
-                                                    <td>$4,508</td>
-                                                </tr>
-                                                <tr>
-                                                    <td scope="row"><img src="assets/img/product-3.jpg" alt=""></td>
-                                                    <td><a class="fw-bold text-primary" href="#">Doloribus nisi exercitationem</a></td>
-                                                    <td>$59</td>
-                                                    <td class="fw-bold">74</td>
-                                                    <td>$4,366</td>
-                                                </tr>
-                                                <tr>
-                                                    <td scope="row"><img src="assets/img/product-4.jpg" alt=""></td>
-                                                    <td><a class="fw-bold text-primary" href="#">Officiis quaerat sint rerum error</a></td>
-                                                    <td>$32</td>
-                                                    <td class="fw-bold">63</td>
-                                                    <td>$2,016</td>
-                                                </tr>
-                                                <tr>
-                                                    <td scope="row"><img src="assets/img/product-5.jpg" alt=""></td>
-                                                    <td><a class="fw-bold text-primary" href="#">Sit unde debitis delectus repellendus</a></td>
-                                                    <td>$79</td>
-                                                    <td class="fw-bold">41</td>
-                                                    <td>$3,239</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div class="col"></div>
                         <div class="col"></div>
                         <div class="col"></div>
@@ -680,61 +769,6 @@
                                 <li><a class="dropdown-item" href="#">This Year</a></li>
                             </ul>
                         </div>
-                        <div class="card-body pb-0">
-                            <h5 class="card-title">Website Traffic <span>| Today</span></h5>
-                            <div id="trafficChart" style="min-height: 400px;" class="echart"></div><script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  echarts.init(document.querySelector("#trafficChart")).setOption({
-                    tooltip: {
-                      trigger: 'item'
-                    },
-                    legend: {
-                      top: '5%',
-                      left: 'center'
-                    },
-                    series: [{
-                      name: 'Access From',
-                      type: 'pie',
-                      radius: ['40%', '70%'],
-                      avoidLabelOverlap: false,
-                      label: {
-                        show: false,
-                        position: 'center'
-                      },
-                      emphasis: {
-                        label: {
-                          show: true,
-                          fontSize: '18',
-                          fontWeight: 'bold'
-                        }
-                      },
-                      labelLine: {
-                        show: false
-                      },
-                      data: [{
-                          value: 1048,
-                          name: 'Search Engine'
-                        },
-                        {
-                          value: 735,
-                          name: 'Direct'
-                        },
-                        {
-                          value: 580,
-                          name: 'Email'
-                        },
-                        {
-                          value: 484,
-                          name: 'Union Ads'
-                        },
-                        {
-                          value: 300,
-                          name: 'Video Ads'
-                        }
-                      ]
-                    }]
-                  });
-                });
               </script>
                         </div>
                     </div>
@@ -747,50 +781,40 @@
                                 <li><a class="dropdown-item" href="#">This Year</a></li>
                             </ul>
                         </div>
-                        <div class="card-body pb-0">
-                            <h5 class="card-title">News &amp; Updates <span>| Today</span></h5>
-                            <div class="news">
-                                <div class="post-item clearfix"><img src="assets/img/news-1.jpg" alt="">
-                                    <h4><a href="#">Nihil blanditiis at in nihil autem</a></h4>
-                                    <p>Sit recusandae non aspernatur laboriosam. Quia enim eligendi sed ut harum...</p>
-                                </div>
-                                <div class="post-item clearfix"><img src="assets/img/news-2.jpg" alt="">
-                                    <h4><a href="#">Quidem autem et impedit</a></h4>
-                                    <p>Illo nemo neque maiores vitae officiis cum eum turos elan dries werona nande...</p>
-                                </div>
-                                <div class="post-item clearfix"><img src="assets/img/news-3.jpg" alt="">
-                                    <h4><a href="#">Id quia et et ut maxime similique occaecati ut</a></h4>
-                                    <p>Fugiat voluptas vero eaque accusantium eos. Consequuntur sed ipsam et totam...</p>
-                                </div>
-                                <div class="post-item clearfix"><img src="assets/img/news-4.jpg" alt="">
-                                    <h4><a href="#">Laborum corporis quo dara net para</a></h4>
-                                    <p>Qui enim quia optio. Eligendi aut asperiores enim repellendusvel rerum cuder...</p>
-                                </div>
-                                <div class="post-item clearfix"><img src="assets/img/news-5.jpg" alt="">
-                                    <h4><a href="#">Et dolores corrupti quae illo quod dolor</a></h4>
-                                    <p>Odit ut eveniet modi reiciendis. Atque cupiditate libero beatae dignissimos eius...</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
-    <footer id="footer" class="footer">
-        <div class="copyright"><span> © Copyright </span><strong><span>NiceAdmin</span></strong><span>. All Rights Reserved </span></div>
-        <div class="credits"><span> Designed by </span><a href="https://bootstrapmade.com/">BootstrapMade</a></div>
-    </footer><a class="d-flex justify-content-center align-items-center back-to-top" href="#"><i class="bi bi-arrow-up-short"></i></a>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/vendor/apexcharts/apexcharts.min.js"></script>
-    <script src="assets/js/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/vendor/chart.js/chart.umd.js"></script>
-    <script src="assets/js/vendor/echarts/echarts.min.js"></script>
-    <script src="assets/js/vendor/quill/quill.min.js"></script>
-    <script src="assets/js/vendor/simple-datatables/simple-datatables.js"></script>
-    <script src="assets/js/vendor/tinymce/tinymce.min.js"></script>
-    <script src="assets/js/vendor/php-email-form/validate.js"></script>
-    <script src="assets/js/js/main.js"></script>
+ <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+      <!-- All the links in the footer should remain intact. -->
+      <!-- You can delete the links only if you purchased the pro version. -->
+      <!-- Licensing information: https://bootstrapmade.com/license/ -->
+      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/quill/quill.min.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
 </body>
 
 </html>

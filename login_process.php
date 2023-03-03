@@ -44,7 +44,7 @@
     	$_SESSION['User_id'] = $user_id;
     	$_SESSION['User_password'] = $user_pass;
     	
-    	header('Location: index.html');
+    	header('Location: dashboard.php');
     	exit();
     	alert('this works i guess');
     }

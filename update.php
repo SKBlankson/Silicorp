@@ -78,6 +78,7 @@ if (isset($_POST['updateemp'])) {
         $sql = "UPDATE employee SET Employee_ID='$newempid', FName='$newempfname', LName='$newemplname', Gender='$newempgender', Date_of_Birth='$newempdob', Company_Email='$newempmail', Dept_Code='$newempdeptcode', Date_Of_Employment='$newempdoe' WHERE Employee_ID='$newempid'";
        if (mysqli_query($conn, $sql)) {
            echo "Record updated successfully";
+
        } else {
            echo "Error updating record: " . mysqli_error($conn);
        }
@@ -88,7 +89,7 @@ if (isset($_POST['updateemp'])) {
     $updatethis = $_POST['updateid'];
 
     // sql to get branch data
-    $sql = "SELECT Employee_ID,FName,LName,Gender,Date_of_Birth,Company_Email,Personal_Email,Dept_Code,Date_of_Employment FROM employee WHERE Employee_ID = '$updatethis'";
+    $sql = "SELECT Employee_ID,FName,LName,Gender,Date_of_Birth,Company_Email,Dept_Code,Date_of_Employment FROM employee WHERE Employee_ID = '$updatethis'";
     $result = $conn->query($sql); //perform query
     $row = $result->fetch_assoc(); //get results
 

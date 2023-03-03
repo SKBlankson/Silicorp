@@ -84,8 +84,7 @@
         </section>
     </main>
     <footer id="footer" class="footer">
-        <div class="copyright"><span> © Copyright </span><strong><span>NiceAdmin</span></strong><span>. All Rights Reserved </span></div>
-        <div class="credits"><span> Designed by </span><a href="https://bootstrapmade.com/">BootstrapMade</a></div>
+
     </footer><a class="d-flex justify-content-center align-items-center back-to-top" href="#"><i class="bi bi-arrow-up-short"></i></a>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/vendor/apexcharts/apexcharts.min.js"></script>

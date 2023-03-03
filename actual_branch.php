@@ -32,7 +32,7 @@
 
 <body>
     <header class="d-flex align-items-center header fixed-top" id="header">
-        <div class="d-flex justify-content-between align-items-center"><a class="d-flex align-items-center logo" href="dashboard.html"><img src="assets/img/logo.png" alt=""></a><i class="bi bi-list toggle-sidebar-btn"></i></div>
+        <div class="d-flex justify-content-between align-items-center"><a class="d-flex align-items-center logo" href="dashboard.php"><img src="assets/img/logo.png" alt=""></a><i class="bi bi-list toggle-sidebar-btn"></i></div>
         <div class="search-bar">
             <form class="d-flex align-items-center search-form" method="POST" action="#"><input type="text" name="query" placeholder="Search" title="Enter search keyword"><button type="submit" title="Search"><i class="bi bi-search"></i></button></form>
         </div>
@@ -51,6 +51,7 @@
             <li class="nav-item"><a class="nav-link collapsed" data-bs-target="#Data_Repository-nav" data-bs-toggle="collapse" href="tables-general.php"><i class="bi bi-card-list"></i><span>Data Repository</span></a><ul id="Data_Repository-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav"><li><a href="actual_employees.php"><i class="bi bi-circle"></i><span>Employees</span></a></li><li><a href="actual_branch.php"><i class="bi bi-circle"></i><span>Branch</span></a></li><li><a href="actual_fabricators.php"><i class="bi bi-circle"></i><span>Fabricators</span></a></li><li><a href="actual_integrators.php"><i class="bi bi-circle"></i><span>Integrators</span></a></li><li><a href="actual_storefronts.php"><i class="bi bi-circle"></i><span>Store-front partners</span></a></li></ul></li>
         </ul>
     </aside>
+    
     <main id="main" class="main">
         <div class="pagetitle">
             <h1>Branch</h1>
@@ -62,6 +63,7 @@
                 </ol>
             </nav>
         </div>
+
         <section class="section">
             <div class="row">
                 <div class="col-lg-12 col-xl-12 col-xxl-12" style="max-width: 100%;">
@@ -120,7 +122,7 @@
             }
 
             // Number of records to display per page
-            $records_per_page = 100;
+            $records_per_page = 200;
 
             // Get the total number of records in the table
             $sql = "SELECT COUNT(*) AS count FROM Integrators";

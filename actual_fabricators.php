@@ -32,7 +32,7 @@
 
 <body>
     <header class="d-flex align-items-center header fixed-top" id="header">
-        <div class="d-flex justify-content-between align-items-center"><a class="d-flex align-items-center logo" href="dashboard.html"><img src="assets/img/logo.png" alt=""></a><i class="bi bi-list toggle-sidebar-btn"></i></div>
+        <div class="d-flex justify-content-between align-items-center"><a class="d-flex align-items-center logo" href="dashboard.php"><img src="assets/img/logo.png" alt=""></a><i class="bi bi-list toggle-sidebar-btn"></i></div>
         <div class="search-bar">
             <form class="d-flex align-items-center search-form" method="POST" action="#"><input type="text" name="query" placeholder="Search" title="Enter search keyword"><button type="submit" title="Search"><i class="bi bi-search"></i></button></form>
         </div>
@@ -68,7 +68,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Fabricators</h5>
-                            <div style="display: flex;justify-content: space-between;padding-bottom: 15pxs;"><button class="btn btn-success" type="button" style="margin-right: -1px;">+Add Record</button><button class="btn btn-primary" type="button" align="right" style="margin-right: 0px;margin-left: 0px;">Display Graph</button></div>
+                            <div style="display: flex;justify-content: space-between;padding-bottom: 15pxs;"><button class="btn btn-success" type="button" style="margin-right: -1px;"><a href="form_fab.php" style="color: white">+Add Record</a></button><button class="btn btn-primary" type="button" align="right" style="margin-right: 0px;margin-left: 0px;">Display Graph</button></div>
                             <div>
                                 <table class="table table-striped">
                                     <thead>
@@ -119,7 +119,7 @@
     }
 
     // Number of records to display per page
-    $records_per_page = 10;
+    $records_per_page = 200;
 
     // Get the total number of records in the table
     $sql = "SELECT COUNT(*) AS count FROM employee";
@@ -202,8 +202,7 @@
 </script>
     </main>
     <footer id="footer" class="footer">
-        <div class="copyright"><span> © Copyright </span><strong><span>NiceAdmin</span></strong><span>. All Rights Reserved </span></div>
-        <div class="credits"><span> Designed by </span><a href="https://bootstrapmade.com/">BootstrapMade</a></div>
+
     </footer><a class="d-flex justify-content-center align-items-center back-to-top" href="#"><i class="bi bi-arrow-up-short"></i></a>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/vendor/apexcharts/apexcharts.min.js"></script>
