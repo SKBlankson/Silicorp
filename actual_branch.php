@@ -94,7 +94,7 @@
             </div>
         </section>
 
-                                   
+<!--        Displaying the tables-->
         <?php
             // Datababse connection parameters
             $servername = "localhost";
@@ -151,22 +151,19 @@
             // create the HTML for the table rows
             $tableBody = "";
             foreach ($results as $row) {
-                $tableBody .= "<tr>";
+                $tableBody .= "<tr id='".$row['Branch_ID']."'>";
                 $tableBody .= "<td>" . $row['Branch_ID'] . "</td>";
                 $tableBody .= "<td>" . $row['Branch_Name'] . "</td>";
                 $tableBody .= "<td>" . $row['Location_ID'] . "</td>";
-                $tableBody .= "<td align='right'><button type='button' class='btn btn-danger' onclick='confirmdelete(this.id)' id='$row[Branch_ID]'><i class='bi bi-exclamation-octagon'></i></button>  \
- <button type='button' class='btn btn-info' onclick='showUpdateModal()' id='$row[Branch_ID]'><i class='bi bi-info-circle'></i></button></td>";
+                $tableBody .= "<td align='right'><button type='button' class='btn btn-danger' onclick='confirmdelete(this.id)' id='$row[Branch_ID]'><i class='bi bi-exclamation-octagon'></i></button> <button type='button' class='btn btn-info' onclick='showUpdateModal(this.id)' id='$row[Branch_ID]'><i class='bi bi-info-circle'></i></button></td>";
                 
             }
 
 
         ?>
-
+        
+<!--        pop up for updating-->
         <!-- Vertically centered Modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
-            Vertically centered
-        </button>
         <div class="modal fade" id="verticalycentered" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -181,6 +178,7 @@
                             <!--                                <div class="col-12"><label class="form-label form-label" for="inputNanme4">Location ID</label><input class="form-control form-control" type="text" id="locationid"></div>-->
                             <div  class="col-12">
                                 <label class="form-label form-label" for="inputNanme4">Location ID</label>
+<!--                                showing the drop down menu-->
                                 <?php
 
                                 // query the database for options
@@ -198,8 +196,10 @@
                                 }
                                 echo "</select>";
 
+
+
                                 // close database connection
-                                $conn->close();
+//                                $conn->close();
                                 ?>
                     </div>
                     <div class="modal-footer">
@@ -216,8 +216,23 @@
     // set the innerHTML of the table body to the tableBody variable
 document.getElementById("branchtable").innerHTML = "<?php echo $tableBody?>";
     
-function showUpdateModal() {
-        $('#verticalycentered').modal('show');
+function showUpdateModal(buttonId) {
+    var locid = buttonId;
+
+<?php
+        $server = new mysqli("localhost","root","","semi_conductor_management_system");
+        $sqlquery = "SELECT FROM branch WHERE Branch_ID = 'locid'";
+//        // Step 3: Execute the SQL query
+//        $result = mysqli_query($conn, $sqlquery);
+//
+//        // Step 4: Retrieve the data and set it as the value of the form input field
+//        if (mysqli_num_rows($result) == 1) {
+//            $querydata = mysqli_fetch_assoc($result);
+//            $Location = $querydata["Location_ID"];
+//        }
+////         ?>
+       $('#verticalycentered').modal('show');
+        
     }
 
 // delete functiion
@@ -257,30 +272,10 @@ function confirmdelete(buttonId) {
 
 
 </script>
-        <!-- Vertically centered Modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
-            Vertically centered
-        </button>
-        <div class="modal fade" id="verticalycentered" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Vertically Centered</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Non omnis incidunt qui sed occaecati magni asperiores est mollitia. Soluta at et reprehenderit. Placeat autem numquam et fuga numquam. Tempora in facere consequatur sit dolor ipsum. Consequatur nemo amet incidunt est facilis. Dolorem neque recusandae quo sit molestias sint dignissimos.
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div><!-- End Vertically centered Modal-->
+      
     </main>
     <footer id="footer" class="footer">
-       
+
     </footer><a class="d-flex justify-content-center align-items-center back-to-top" href="#"><i class="bi bi-arrow-up-short"></i></a>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/vendor/apexcharts/apexcharts.min.js"></script>
