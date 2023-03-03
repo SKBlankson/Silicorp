@@ -74,4 +74,37 @@
     <script src="assets/js/js/main.js"></script>
 </body>
 
+<<<<<<< Updated upstream
+=======
+function login(){
+
+if(validationLogin()){
+        $.ajax({
+                url: "login_process.php", 
+                type: "POST",
+                data: {"username": User_name, 
+                       "password": User_password 
+                       },
+                dataType: "html",
+                cache: false,
+                beforeSend: function() {    
+                    console.log("Processing...");
+                },
+                success: 
+                      function(data){
+                        if(data == "OK"){
+                            return 0 ;
+                        }else{
+                            return 0;
+                        }
+                    }
+
+        });
+
+    }else{
+        alert("Incorrect data");
+    }
+}
+</script>
+>>>>>>> Stashed changes
 </html>

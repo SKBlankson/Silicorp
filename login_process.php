@@ -37,10 +37,18 @@
     	$user_name = $row['User_name']; 
     	$user_pass = $row['User_password']; 
     	$user_role = $row['User_role']; 
+<<<<<<< Updated upstream
+=======
+
+    	$_SESSION['User_id'] = $user_id;
+    	$_SESSION['User_password'] = $user_pass;
+		$_SESSION['User_role'] = $user_role;
     	
-    	header('Location: index.html');
-    	exit();
-    	alert('this works i guess');
+    	header('Location: dashboard.php');
+    	//alert('this works i guess');
+		exit();
+>>>>>>> Stashed changes
+    	
     }
 
     else{
