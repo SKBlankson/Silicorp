@@ -101,6 +101,7 @@ foreach ($results as $row) {
     $tableBody .= "<td align='right'><button type='button' class='btn btn-danger' onclick='confirmdelete(this.id)' id='$row[Employee_ID]'><i class='bi bi-exclamation-octagon'></i></button> <button type='button' class='btn btn-info' onclick='showUpdateModal(this.id)' id='$row[Employee_ID]'><i class='bi bi-info-circle'></i></button></td>";
     $tableBody .= "</tr>";
 }
+
 $sql = "SELECT COUNT(*) AS count FROM employee WHERE Dept_Code = 'CS'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
